@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Fixing my own blunder with powershell | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from the default (oh no). There are different reasons for that whic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fixing my own blunder with powershell">
+<meta property="og:url" content="http://teapotcoder.com/post/fixing-my-own-blunder-with-powershell/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from the default (oh no). There are different reasons for that whic">
+<meta property="og:updated_time" content="2015-11-01T20:27:28.834Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Fixing my own blunder with powershell">
+<meta name="twitter:description" content="I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from the default (oh no). There are different reasons for that whic">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-fixing-my-own-blunder-with-powershell" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/fixing-my-own-blunder-with-powershell/" class="article-date">
+  <time datetime="2014-06-16T05:00:00.000Z" itemprop="datePublished">2014-06-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Fixing my own blunder with powershell
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from the default (oh no). There are different reasons for that which have now been totally debunked. The service that uses java (Subversion Edge in this case) has a windows service with a path to Java at the time (the non default path).<br>Then a patch got applied.</p>
+<p>It uninstalled the original one and installed the updated one in the default location. So now the windows service is trying to run Java from a location that no longer exists. So how does one fix such a problem given that you can’t change the path the windows service is using from the user interface?</p>
+<p><strong>Power</strong>shell</p>
+<p>Thanks to <a href="http://4sysops.com/jeffery-hicks/" target="_blank" rel="external">Jeffery Hicks</a> and his posts on <a href="http://4sysops.com/archives/managing-services-the-powershell-way-part-6/" target="_blank" rel="external">Managing Services the Powershell way</a> I was able to very easily correct the executable path of that service.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$theService</span> = <span class="built_in">Get-WmiObject</span> win32_service -Filter <span class="string">"name='CSVNConsole'"</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$updatedPath</span> = <span class="variable">$theService</span>.PathName.Replace(<span class="string">'E:\MyOldPathToJava'</span>, <span class="string">'C:\Program Files\Java\jre7'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$theService</span> | Invoke-WmiMethod -Name Change -ArgumentList @(<span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$updatedPath</span>) | Select ReturnValue</span><br><span class="line"></span><br><span class="line"><span class="comment"># Verify the change took.</span></span><br><span class="line"><span class="built_in">Get-WmiObject</span> win32_service -Filter <span class="string">"name='CSVNConsole'"</span> | Select *</span><br><span class="line"></span><br><span class="line"><span class="built_in">Start-Service</span> CSVNSonsole</span><br></pre></td></tr></table></figure>
+<p>When using the <code>Invoke-WmiMethod</code> it’s important to know what the order of parameters is. What’s documented may not be correct. so use <code>$theService.GetMethodParameters(&quot;Change&quot;)</code> to determine the proper order. Ignore those that start with an underscore.</p>
+<p>All of this is in very good detail at Jeffery Hicks’ blog about this.</p>
+<p>On a side note be sure to use <code>Start-Transcript</code> when working on stuff like this. It’s wonderful to be able to go back and read everything that you did and what the outcome of it was.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/fixing-my-own-blunder-with-powershell/" data-id="cigh0ax0d000ghga0qqxgf65c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/show-tell-powerargs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Show &amp; Tell: Powerargs
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/vagrant-for-development-environments/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Vagrant for development environments</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

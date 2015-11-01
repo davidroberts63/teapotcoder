@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>LastPass Lessons Learned | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LastPass Lessons Learned">
+<meta property="og:url" content="http://teapotcoder.com/post/lastpass-lessons-learned/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
+<meta property="og:updated_time" content="2015-11-01T20:27:28.839Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LastPass Lessons Learned">
+<meta name="twitter:description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-lastpass-lessons-learned" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/lastpass-lessons-learned/" class="article-date">
+  <time datetime="2014-04-11T05:00:00.000Z" itemprop="datePublished">2014-04-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LastPass Lessons Learned
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I really like using <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>. In the wake of the <a href="http://heartbleed.com/" target="_blank" rel="external">HeartBleed</a> fiasco I knew I should change several of my passwords as should you.<a id="more"></a>Just make sure the site you are changing your password on has fixed their certificate or you will still be open to the same vulnerability. Anyway the reason for this post is because I decided to change my <strong>master</strong> password on <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> last night about 10pm. In the back of my mind I was thinking this was a bad idea and should do it in the morning. But no fear I’m good with my passwords, I have a system.</p>
+<h2 id="It-_Failed-">It. Failed.</h2><p>First thing to clear up. I don’t use passwords. I use pass<strong>phrases</strong>. That is my ‘password’ is a longer string of text more akin to a sentence with stuff thrown in. See the <a href="http://xkcd.com/936/" target="_blank" rel="external">XKCD</a> for an idea. Maximum password lengths of 20 or less really bug me. Also <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> does not have access to your password and cannot reset it to a dummy value. All the encryption happens on your computer and then passes the encrypted data up to their servers. They couldn’t open my data if they or anyone else forced them to. That’s one of the top reasons I picked <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>.</p>
+<p>So last night I change my pass<strong>phrase</strong> feeling good about protecting my data. This morning I login to <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> and recive the ‘invalid login’ message. No fear it happens to me on occasion with the longer passwords I hit the wrong key. Try again and it should be fine. Nope. Slloowwly try again finger pecking this time, nothing. Now I’m officially sweating and co-workers are asking if I am okay. I start making a list of possible alternatives I may have inadvertently used last night. Casing, spacing, number, punctuation you name it I tried it. I was about to give up hope. But <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> sent me my hint as I had requested it and it had a link to ‘Account Recovery’.</p>
+<p>And there in lay rescue. The last ditch effort that <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> offers is to revert your vault. This is truly a final option and a severe one depending on your situation. It just so happens to be one I was hoping that they would have. The reverting your vault option will restore a backup of your vault to the one just prior to the last master password change. It’s very effective for just my situation, having changed my password but done forgot it. Click revert; wait for the server to rescue my data and voila! Login with my old password and everything is right as rain again.</p>
+<p>Just be sure to have access to your email account that your <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> account is setup to send security emails too. Fortunately I don’t use <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> to login to that particular email address to force me to have that password in mind all the time. For those that are concerned about the revert capability you can turn it off in your account settings.</p>
+<p>Again, I really enjoy the <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> service. But I need to get a backup plan in place for this data just in case I totally lose my memory.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/lastpass-lessons-learned/" data-id="cigh0ax0d000chga0geqeia4c" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/to-build-and-deploy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          To Build and Deploy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/okc-dg-servicestack/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">OKC DG ServiceStack</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

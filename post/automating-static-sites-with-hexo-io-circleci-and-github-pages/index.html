@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Automating static sites with Hexo.io, CircleCI and Github Pages | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I recently became one of the organizers of the OKCsharp user group in Oklahoma City. They use Hexo.io to publish the user group static website onto Github. Hexo is a Node.js package that generates a s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Automating static sites with Hexo.io, CircleCI and Github Pages">
+<meta property="og:url" content="http://teapotcoder.com/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="I recently became one of the organizers of the OKCsharp user group in Oklahoma City. They use Hexo.io to publish the user group static website onto Github. Hexo is a Node.js package that generates a s">
+<meta property="og:updated_time" content="2015-11-01T20:27:28.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Automating static sites with Hexo.io, CircleCI and Github Pages">
+<meta name="twitter:description" content="I recently became one of the organizers of the OKCsharp user group in Oklahoma City. They use Hexo.io to publish the user group static website onto Github. Hexo is a Node.js package that generates a s">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-automating-static-sites-with-hexo-io-circleci-and-github-pages" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/" class="article-date">
+  <time datetime="2015-10-31T21:12:05.000Z" itemprop="datePublished">2015-10-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Automating static sites with Hexo.io, CircleCI and Github Pages
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I recently became one of the organizers of the <a href="http://okcsharp.net" target="_blank" rel="external">OKCsharp</a> user group in Oklahoma City. They use <a href="http://hexo.io" target="_blank" rel="external">Hexo.io</a> to publish the user group static website onto Github. Hexo is a Node.js package that generates a static site and will update the appropriate <code>gh-pages</code> branch for Github to host.<br><a id="more"></a></p>
+<h4 id="Hexo-io">Hexo.io</h4><p>I’m not going into the use of Hexo; their website has very good documentation. Pay special attention to the <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Hexo deployment</a> section. That’s what I will be modifying a bit here in this post.</p>
+<p>I handle a large part of the automated development pipeline process where I work fulltime so the idea of doing a git pull and</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy <span class="comment">--generate</span></span><br></pre></td></tr></table></figure>
+<p>to deploy the website, although short and simple (much nicer than others I’ve used) is still so <strong>manual</strong>. It just feels…wasteful.</p>
+<p>So I fixed it with continuous integration.</p>
+<h4 id="Using_CircleCI">Using CircleCI</h4><p>I ended up using <a href="https://circleci.com" target="_blank" rel="external">CircleCI</a>. It’s fast. And I mean super fast. Much faster than TravisCI (and cheaper if you end up needing more). CircleCI will also build pull requests from forks which is awesome (so will TravisCI). Connect CircleCI to your Github account and have CircleCI ‘follow’ the appropriate repository. You will need a <code>circle.yml</code> file in your root of the repository to do this process.</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">deployment:</span><br><span class="line">  production:</span><br><span class="line">    branch: master</span><br><span class="line">    commands:</span><br><span class="line">      -<span class="ruby"> git config --global user.name <span class="string">"CircleCI"</span></span><br><span class="line"></span>      -<span class="ruby"> git config --global user.email <span class="string">"noone@okcsharp.net"</span></span><br><span class="line"></span>      -<span class="ruby"> sed -i<span class="string">''</span> <span class="string">"s~https://github.com/techlahoma/okcsharp-website.git~https://$&#123;GH_TOKEN&#125;:x-oauth-basic@github.com/techlahoma/okcsharp-website.git~"</span> _config.yml</span><br><span class="line"></span>      -<span class="ruby"> rm -rf .deploy_git/</span><br><span class="line"></span>      -<span class="ruby"> hexo clean</span><br><span class="line"></span>      -<span class="ruby"> hexo generate</span><br><span class="line"></span>      -<span class="ruby"> hexo deploy</span></span><br></pre></td></tr></table></figure>
+<p>The <code>production</code> name is just for the set of commands for the deployment; it has no other effect. The <code>branch</code> field tells CircleCI which branch this deployment will run for. In this case I only deploy the website when a commit to <code>master</code> is made. So pull requests will not trigger this. This lets us review a PR and then merge it to master when we want to. Then CircleCI handles the rest.</p>
+<p>The <code>commands</code> simply contain shell commands needed to deploy the hexo website to Github. That <code>sed</code> command is used to modify the deployment section of the hexo <code>_config.yml</code> file to allow it to deploy to Github with the appropriate token having commit permissions.</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment section <span class="keyword">of</span> hexo _config.yml</span><br><span class="line">## Docs: http:<span class="comment">//hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="class"><span class="keyword">type</span>: <span class="title">git</span></span></span><br><span class="line">  repository: https:<span class="comment">//github.com/techlahoma/okcsharp-website.git</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
+<p>It changes the <code>repository</code> field to use basic OAuth.<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">deploy</span>:</span><br><span class="line">  <span class="typedef"><span class="keyword">type</span>: git</span></span><br><span class="line">  repository: https://$&#123;<span class="type">Value</span> <span class="keyword">of</span> <span class="type">GH_TOKEN</span>&#125;:x-oauth-basic@github.com/techlahoma/okcsharp-website.git</span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure></p>
+<p>That <code>${GH_TOKEN}</code> is an environment variable set in the CircleCI web ui. You can generate that token in Github by going to your Github settings then <a href="https://github.com/settings/tokens" target="_blank" rel="external">Personal Access Tokens</a>. Put the token into the CircleCI project settings <a href="https://circleci.com/docs/environment-variables#custom" target="_blank" rel="external">environment variables</a>.</p>
+<h5 id="Environment_Variable_Security">Environment Variable Security</h5><p>A very important note about environment variables in CircleCI; environment variables specified in the <code>circle.yml</code> are available in fork builds. Environment variables specified in the CircleCI web UI are <strong>not</strong> available during fork builds. This is a security precaution. Anyone randomly could fork your public repo, modify the commands and have it export your sensitive environment variables to another server.</p>
+<p>After updating the hexo <code>_config.yml</code> file to be able to commit to Github appropriately the rest of the commands just run the appropriate hexo commands to generate and deploy the website.</p>
+<p>The end result is someone can send us a pull request containing a new post. We look it over and decide to merge it using the Github web UI. CircleCI is notified of that commit and takes care of the rest. In short:</p>
+<h4 id="One_click_hexo_deployments">One click hexo deployments</h4><p>Oh, that sounds like a good name for a talk. But before I get to that I need to mention that I didn’t stop there. In my next post I’ll describe how I generated screenshots of the PR and even put those screenshots onto the PR as a comment.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/" data-id="cigh0ax0d000ihga0m36zvlp7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/post/how-i-got-in-the-world-of-software/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">How I got in the world of software</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

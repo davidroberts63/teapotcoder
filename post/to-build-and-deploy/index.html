@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>To Build and Deploy | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If">
+<meta property="og:type" content="article">
+<meta property="og:title" content="To Build and Deploy">
+<meta property="og:url" content="http://teapotcoder.com/post/to-build-and-deploy/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If">
+<meta property="og:updated_time" content="2015-11-01T21:01:16.150Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="To Build and Deploy">
+<meta name="twitter:description" content="The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-to-build-and-deploy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/to-build-and-deploy/" class="article-date">
+  <time datetime="2014-05-07T05:00:00.000Z" itemprop="datePublished">2014-05-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      To Build and Deploy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If you don’t build it you can’t deploy it and if you don’t deploy it what’s the point?<a id="more"></a>Educational projects are the exception here since they may not be intended to go to production.</p>
+<p>In light of that I prefer to have an automated process do as much as possible for me. Preferrably not on my own machine. So that I am not interrupted during my regular work flow and I can trust the process is done consistently and timely. You can read most of that in two words “Be lazy”.</p>
+<p>If you don’t have an automated build and an automated deployment process you are really missing out on some great productivity gains. As well as a big boost of confidence in your work. Depending on your business environment you may <strong>need</strong> to have a central automated build and deployment process for legal auditing and regulation requirements.</p>
+<p>####Here are a few things you have to deal with when you don’t have a central automated build.</p>
+<ul>
+<li>No guarantee the artifacts were produced from the code as in source control <a href="#note1" id="source1"><sup>1</sup></a>. Since you could make changes locally before building and forget to commit those changes.</li>
+<li>Build and test <a href="#note2" id="source2"><sup>2</sup></a> problems take much longer to discover. Since you only build when you feel like it. How many times have you forgotton to add a file properly?</li>
+<li>Where is the latest build? Oh Joe did it and it’s on the NAS, or wait Bob did it and I think he put it on the NAS but he was heading home so not sure. Nevermind I’ll do it right now for you…awww man build errors great, just great.</li>
+<li>What version of the source code did this build come from? This is very important in defect tracking and audits.</li>
+<li>Lack of consistent build environment. You have one version of the build and test tools. Other team members may have a different version of the build and test tools. Now the build is inconsistent and may break for difficult to track reasons.</li>
+</ul>
+<p>Sure it’s easy to just build the solution right on your machine, you do it all the time during the development process. But so many things can go wrong because <em>you</em> are involved in the process. People cause all sorts of problems because we get easily distracted by just about anything.</p>
+<h4 id="And_if_you_don’t_have_a_central_automated_deployment-">And if you don’t have a central automated deployment.</h4><ul>
+<li>No guarantee that what is deployed came from an offical set of build artifacts. Who knows what was put in production with this deployment. Yes even if scripted. Since you are deploying from your local machine you can easily introduce some oddity.</li>
+<li>Modified deployment process problems take longer to discover. You may have added a deployment step while others have changed existing ones. You won’t know until all of it comes together.</li>
+<li>Inconsistent deployment environment. Different versions of deployment tools.</li>
+<li>Less to no visibility of recurring deployment problems.</li>
+<li>Ability to audit is pretty much nil. Because of each of the other problems it would be very difficult to prove what actually happened.</li>
+<li>No real way to determine if what is in production differs from what was supposed to be deployed. This could be useful if you belive production has been cracked or infected. The reason why you can’t is because there is no definitive source of what went to production.</li>
+</ul>
+<p>####When automated build and deployment is probably not needed</p>
+<p>If your team is super small say no more than three people then setting up a central automated build and deployment process <strong>might</strong> be more work than it would be worth. Be sure to take into consideration auditing and regulatory compliance. Most applications may not need to think about that but when you do you had better think about it or it will seriously hurt later on.</p>
+<p>####So what’s the deal?</p>
+<p>A consistent, traceable, repeatable build and deployment process can and usually does instill more trust within your organization. This will allow you to deploy much quicker and shorten the feedback cycle so you can know when you are doing right and wrong earlier in the development process. <a href="http://twitter.com/datachomp" target="_blank" rel="external">Rob Sullivan</a> calls this “Success feeds Success”.</p>
+<p>You may not think it is important now but later on when that deadline is looming overhead and you need to get features out faster you would be much better off with an automated build and deployment process. It is one less thing for you to think about since it will just work for you not against you. I’ll write a few posts about different ways to have an automated build and deployment process so keep an eye out.</p>
+<h5 id="Footnotes">Footnotes</h5><ol>
+<li>Not using version control? Different discussion, bigger problem. <a id="note1" href="#source1">go back</a></li>
+<li>No tests? Different discussion, bigger problem. <a id="note2" href="#source2">go back</a></li>
+<li>Thanks to <a href="http://www.twitter.com/jeff_french" target="_blank" rel="external">Jeff French</a> and <a href="http://www.twitter.com/apapadimoulis" target="_blank" rel="external">Alex Papadimoulis</a> for their talks at <a href="http://kcdc.info" target="_blank" rel="external">kcdc13</a> that gave me the last couple of points I needed to finish this post.</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/to-build-and-deploy/" data-id="cigh0awzx0004hga0w76vmxlc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/nancyfx-testing-with-an-authenticated-user/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          NancyFX Testing with an authenticated user
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/lastpass-lessons-learned/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LastPass Lessons Learned</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

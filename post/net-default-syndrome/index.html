@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>.NET Default Syndrome | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of ef">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET Default Syndrome">
+<meta property="og:url" content="http://teapotcoder.com/post/net-default-syndrome/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of ef">
+<meta property="og:updated_time" content="2015-11-01T21:04:58.510Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content=".NET Default Syndrome">
+<meta name="twitter:description" content="Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of ef">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-net-default-syndrome" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/net-default-syndrome/" class="article-date">
+  <time datetime="2014-03-12T05:00:00.000Z" itemprop="datePublished">2014-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      .NET Default Syndrome
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of effort to leave something you have been working with in excess of 10 years for something you have only been looking at for about a year. I know he will do well in whatever environment he choses; because it’s about skill and determination; not about what product or platform you work with. But this isn’t about him and I’m sure he is disappointed about that.<br><a id="more"></a><br>Demis Bellot (@DemisBellot) made a long comment about Rob Sullivan leaving SQL Server and one that I feel bears repeating (but not by me) and must be seriously pointed out. So I’ll just wait here a minute while you go and read <a href="http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks/#comment-826228431" target="_blank" rel="external">his comment</a>. Go ahead I can wait just spinning bits here. But this is not about Demis either.</p>
+<p>Done? If your are a .NET developer how did that hit you? It should have because I’m sure everyone is or has done just what he said; gone with the ‘Microsoft prescribed default framework’.</p>
+<p>Before I go further with this post understand that I do enjoy working in .NET and I have been in .NET (C#/VB) for 10+ years myself desktop and web (mobile soon). I’ve worked in a small/medium business using .NET and PL/B (I know you never heard of PL/B no surprise there). I now work for a medium/large enterprise with .NET. I have nothing against other languages/platforms such as Ruby or Python and would like to really dig into them, but this isn’t about me.</p>
+<p>This is about us; it is about .NET. It is about our work, play, and culture as a community of developers. This is <em>NOT</em> about Microsoft. I repeat this is <em>NOT</em> about Microsoft. They just may end up on the wrong side of the table.</p>
+<p>We the developer community of .NET must pause and look at what we accept as tools to do our work and play. We must hold each other and those that provide framework tooling to a standard of use that currently does not exist on a wide enough scale to properly advance our platform.</p>
+<p>The default framework tooling provided by Microsoft is great to get initially started; to learn a language; to get involved in a community and culture; to get an idea of what a solution should look like. But as time goes on we must grow into different tooling. Advancing our skills our applications and our solutions. To handle the increased features and decreased time frames.</p>
+<p>It is the responsibility of the developer community to put the various .NET framework toolings in their appropriate place. To not allow the default framework to rule over most enterprises and small businesses long term. Should it exist absolutley, but should it be as widespread as it is now? No! We must thank Microsoft for this default framework that has allowed so many to get started so quickly and easily (yes this may be debated). But we must also assume our own responsibility of moving to other framework tooling once we have grown out of the initial solution.</p>
+<p>We must seriously consider the frameworks that have been born out of frustration with the status quo. <a href="http://mvc.fubu-project.org" target="_blank" rel="external">FubuMVC</a>, <a href="http://www.servicestack.net" target="_blank" rel="external">ServiceStack</a>, <a href="http://nancyfx.org" target="_blank" rel="external">NancyFx</a>, <a href="https://github.com/SamSaffron/dapper-dot-net" target="_blank" rel="external">Dapper</a>, <a href="https://github.com/markrendle/Simple.Data" target="_blank" rel="external">Simple.Data</a>, <a href="http://www.toptensoftware.com/petapoco/" target="_blank" rel="external">PetaPoco</a> are only a few examples.</p>
+<p>It is up to us; the community of .NET developers to discuss with our colleagues about a serious change in framework toolings. Not to another platform, but just to another framework. Fear need not be involved as your current knowledge would work well in the new frameworks. Excitment, challenges, easier testing, faster delivery, and easier maintenance await us in these other frameworks. Why? Because someone else was in your place and became frustrated; thinking ‘Why is this difficult?’ and did something about it.</p>
+<p>Platforms such as Ruby and Python don’t have the <a href="http://en.wikipedia.org/wiki/List_of_Tron_characters#Master_Control_Program" target="_blank" rel="external">Master Control Program</a> to provide a default framework. It had to come about by the community. And the community is tenacious about doing it well.</p>
+<p>It will be difficult, and the timing may have to be right, but we must do this. We must discuss and be willing to try and to learn to communicate and to grow and to advance. Lest we continue down the path of the .NET default syndrome.</p>
+<p>–Sometimes I surprise myself with what comes out of this grey matter. Sometimes I wonder if I have any at all.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/net-default-syndrome/" data-id="cigh0awzx000ahga0s6do3u86" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/okc-dg-servicestack/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          OKC DG ServiceStack
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

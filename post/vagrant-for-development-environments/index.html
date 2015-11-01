@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Vagrant for development environments | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vagrant for development environments">
+<meta property="og:url" content="http://teapotcoder.com/post/vagrant-for-development-environments/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
+<meta property="og:updated_time" content="2015-11-01T20:27:28.848Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vagrant for development environments">
+<meta name="twitter:description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-vagrant-for-development-environments" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/vagrant-for-development-environments/" class="article-date">
+  <time datetime="2014-06-08T05:00:00.000Z" itemprop="datePublished">2014-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Vagrant for development environments
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I have been using <a href="http://www.vagrantup.com/" target="_blank" rel="external">Vagrant</a> for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host machine clean from inadvertent changes.<br><a id="more"></a><br>When I do the lite development with Ruby or Python I use Vagrant to manage the runtime environment. I continue to actually write the code using my host machine. This way I can use my Sublime and other development tools setup across all the development machines. Then I can quickly change the runtime, testing environment without affecting the writing envirnonment.</p>
+<p>You can use the ‘<a href="http://docs.vagrantup.com/v2/synced-folders/basic_usage.html" target="_blank" rel="external">config.vm.synced_folder</a>‘ property in the Vagrantfile to keep a host folder synced up as a mounted folder on your guest Linux machine. From that point if you clone your repository into that folder on your host machine You will also have them in your guest machine.</p>
+<p>You may also keep your Vagrantfile under version control. Just check it out to a separate folder. I do this so I can use the same vagrant setup for multiple environments when needed.</p>
+<p>Vagrant checkout of Ruby Vagrant config (Vagrantfile and puppet/ansible config)</p>
+<p><code>/Users/johndoe/devenvironments/rubydev</code></p>
+<p>Ruby project checkout</p>
+<p><code>/Users/johndoe/development/my-project</code></p>
+<p>I set the ‘config.vm.synced_folder’ to the <code>/Users/johndoe/development</code> folder. Change to the rubydev folder on my host and <code>vagrant up</code>. In the vm I can change to that dir using the name I specified in the vagrantfile. In this case <code>/development</code></p>
+<p><code>config.vm.synced_folder &quot;/Users/johndoe/development&quot;, &quot;/development&quot;</code></p>
+<p>I continue writing in my host but runtime, web server (via forwarded ports) and testing are in the vm. This does cause me to switch between host and guest when checking test results or dealing with gems. I would like to get growl setup to talk to the host from the guest so that my test results show as I’m writing within my host machine. But that’s for a later time.</p>
+<p>Note this also works for .NET development in Windows. Same principle just a different OS. I’m currently using Puppet to manage the configuration. Not sure of the road map of Windows support in Ansible yet.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/vagrant-for-development-environments/" data-id="cigh0awzh0003hga0x2g3lihs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/fixing-my-own-blunder-with-powershell/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Fixing my own blunder with powershell
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/strong-naming-net-and-key-containers/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Strong Naming .NET and Key Containers</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>

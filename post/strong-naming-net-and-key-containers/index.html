@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Strong Naming .NET and Key Containers | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strong Naming .NET and Key Containers">
+<meta property="og:url" content="http://teapotcoder.com/post/strong-naming-net-and-key-containers/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key">
+<meta property="og:updated_time" content="2015-11-01T20:27:28.845Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Strong Naming .NET and Key Containers">
+<meta name="twitter:description" content="There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'> -->
+  <!-- <link href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css"> -->
+  <link href="//fonts.useso.com/css?family=Source+Code+Pro:400,700" rel="stylesheet" type="text/css">
+  <link href='//fonts.useso.com/css?family=Open+Sans:300,600' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+          <li>
+            <a href="/post/octopygmy/">OctoPygmy</a>
+          </li>
+        
+          <li>
+            <a href="/post/the-case-for-abstract-ioc/">The case for abstract IoC</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  
+</aside>
+        
+        <section id="main"><article id="post-strong-naming-net-and-key-containers" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/strong-naming-net-and-key-containers/" class="article-date">
+  <time datetime="2014-06-03T05:00:00.000Z" itemprop="datePublished">2014-06-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Strong Naming .NET and Key Containers
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key container.<a id="more"></a> I’ll just get right to the situation and the point.</p>
+<p>I’m strong naming assemblies primarily so they can be added to the GAC. Can’t let the full pfx sit on the developers’ laptops for security concerns. Delay signing just seems like it’s going to cause more troubles than it is worth. Since we are using a central build server I’m just telling msbuild to sign the assemblies on the fly. Yeah for automation!</p>
+<p>When you do that by specifying the <code>AssemblyOriginatorKeyFile</code> msbuild property and that file is password protected (a pfx file) then msbuild will complain about the password. It will also tell you that you can import it into a key container with a name that msbuild has specified. So I do that. Well, not me really but the security team. They are the ones with the password anyway.</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="command">\Program</span> Files (x86)<span class="command">\Microsoft</span> SDKs<span class="command">\Windows</span><span class="command">\v</span>8.0A<span class="command">\bin</span><span class="command">\NETFX</span> 4.0 Tools<span class="command">\sn</span>.exe -i <span class="special">[</span>PATH_TO_YOUR_PFX_FILE<span class="special">]</span> <span class="special">[</span>KEY_FROM_MSBUILD_ERROR_OUTPUT<span class="special">]</span></span><br></pre></td></tr></table></figure>
+<p>The import is tied to the contents of the file. Not the file name or the path.</p>
+<p>Now from my thinking the key is inside that key container; so I don’t need to use the <code>AssemblyOriginatorKeyFile</code> property anymore right? To back that up there is another msbuild property called <code>AssemblyKeyContainerName</code>, heck there’s even one called <code>AssemblyKeyName</code> although that’s in an extension pack. So out with <code>AssemblyOriginatorKeyFile</code> and in with <code>AssemblyKeyContainerName</code>.</p>
+<p><strong>Nope.</strong></p>
+<p>Doesn’t work. No one’s going to tell you directly either.</p>
+<p>I assumed something. We all know what that means.</p>
+<p>If you do import the password protected pfx into that key container then you still must specify that <code>AssemblyOriginatorKeyFile</code> pointing to the pfx file. MSBuild will look in its container for the private key data corresponding to that file you specified and the container it told you earlier.</p>
+<p>Oh and the <code>AssemblyKeyContainerName</code> msbuild property does absolutely nothing as far as I can tell. I wish it did because the container name that msbuild wants (VS_KEY_RANDOMALPHANUM) is nice and ugly.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/strong-naming-net-and-key-containers/" data-id="cigh0awzx0006hga0g2g9n1dh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/post/vagrant-for-development-environments/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Vagrant for development environments
+        
+      </div>
+    </a>
+  
+  
+    <a href="/post/fork-pull-powerargs/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Fork &amp; Pull: Powerargs</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
