@@ -2,9 +2,10 @@
 menu:
   Home: /
   Archives: /archives
-  About: /about/index.html
-rss: 
-github: https://github.com/ppoffice/hexo-theme-alex
+	Failures: /page/failures/
+  About: /page/about-me/
+rss:
+github: https://github.com/davidroberts63
 
 # Content
 excerpt_link: Read More
@@ -13,21 +14,17 @@ fancybox: true
 # Sidebar
 sidebar: left
 widgets:
-- category
-- archive
 - recent_posts
+- archive
 - tag
-- tagcloud
-- links
 
 # Links
-links: 
-  Hexo: http://hexo.io
+links:
 
 # Miscellaneous
 google_analytics:
 favicon: /favicon.png
-twitter:
+twitter: davidroberts63
 google_plus:
 fb_admins:
 fb_app_id:
