@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Vagrant for development environments | Teapotcoder</title>
+  <title>Archives: 2015/11 | Teapotcoder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Vagrant for development environments">
-<meta property="og:url" content="http://teapotcoder.com/post/vagrant-for-development-environments/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teapotcoder">
+<meta property="og:url" content="http://teapotcoder.com/archives/2015/11/index.html">
 <meta property="og:site_name" content="Teapotcoder">
-<meta property="og:description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
-<meta property="og:updated_time" content="2015-11-01T20:27:28.848Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vagrant for development environments">
-<meta name="twitter:description" content="I have been using Vagrant for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host m">
+<meta name="twitter:title" content="Teapotcoder">
+<meta name="twitter:description">
 <meta name="twitter:creator" content="@davidroberts63">
   
   
@@ -133,81 +132,39 @@ ga('send', 'pageview');
   
 </aside>
         
-        <section id="main"><article id="post-vagrant-for-development-environments" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/post/vagrant-for-development-environments/" class="article-date">
-  <time datetime="2014-06-08T05:00:00.000Z" itemprop="datePublished">2014-06-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      Vagrant for development environments
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/post/watch-your-artifacts-web-people/" class="archive-article-date">
+  <time datetime="2015-11-02T03:55:37.000Z" itemprop="datePublished">Nov 1</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/post/watch-your-artifacts-web-people/">Watch your artifacts web people</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I have been using <a href="http://www.vagrantup.com/" target="_blank" rel="external">Vagrant</a> for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host machine clean from inadvertent changes.<br><a id="more"></a><br>When I do the lite development with Ruby or Python I use Vagrant to manage the runtime environment. I continue to actually write the code using my host machine. This way I can use my Sublime and other development tools setup across all the development machines. Then I can quickly change the runtime, testing environment without affecting the writing envirnonment.</p>
-<p>You can use the ‘<a href="http://docs.vagrantup.com/v2/synced-folders/basic_usage.html" target="_blank" rel="external">config.vm.synced_folder</a>‘ property in the Vagrantfile to keep a host folder synced up as a mounted folder on your guest Linux machine. From that point if you clone your repository into that folder on your host machine You will also have them in your guest machine.</p>
-<p>You may also keep your Vagrantfile under version control. Just check it out to a separate folder. I do this so I can use the same vagrant setup for multiple environments when needed.</p>
-<p>Vagrant checkout of Ruby Vagrant config (Vagrantfile and puppet/ansible config)</p>
-<p><code>/Users/johndoe/devenvironments/rubydev</code></p>
-<p>Ruby project checkout</p>
-<p><code>/Users/johndoe/development/my-project</code></p>
-<p>I set the ‘config.vm.synced_folder’ to the <code>/Users/johndoe/development</code> folder. Change to the rubydev folder on my host and <code>vagrant up</code>. In the vm I can change to that dir using the name I specified in the vagrantfile. In this case <code>/development</code></p>
-<p><code>config.vm.synced_folder &quot;/Users/johndoe/development&quot;, &quot;/development&quot;</code></p>
-<p>I continue writing in my host but runtime, web server (via forwarded ports) and testing are in the vm. This does cause me to switch between host and guest when checking test results or dealing with gems. I would like to get growl setup to talk to the host from the guest so that my test results show as I’m writing within my host machine. But that’s for a later time.</p>
-<p>Note this also works for .NET development in Windows. Same principle just a different OS. I’m currently using Puppet to manage the configuration. Not sure of the road map of Windows support in Ansible yet.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://teapotcoder.com/post/vagrant-for-development-environments/" data-id="cighftxc500048ka0u59zg2n6" class="article-share-link">Share</a>
-      
-        <a href="http://teapotcoder.com/post/vagrant-for-development-environments/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/post/fixing-my-own-blunder-with-powershell/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Fixing my own blunder with powershell
-        
-      </div>
-    </a>
-  
-  
-    <a href="/post/strong-naming-net-and-key-containers/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Strong Naming .NET and Key Containers</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
-
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
+  
+  
+    </div></section>
+  
 </section>
       </div>
       <footer id="footer">
@@ -225,13 +182,11 @@ ga('send', 'pageview');
 <script>
   var disqus_shortname = 'davidroberts63';
   
-  var disqus_url = 'http://teapotcoder.com/post/vagrant-for-development-environments/';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
