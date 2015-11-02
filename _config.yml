@@ -13,6 +13,7 @@ timezone: America/Chicago
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://teapotcoder.com
+cname: teapotcoder.com
 root: /
 permalink: post/:title/
 permalink_defaults:
@@ -42,6 +43,7 @@ highlight:
   line_number: true
   auto_detect: true
   tab_replace:
+disqus_shortname: davidroberts63
 
 # Category & Tag
 default_category: uncategorized
