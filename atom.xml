@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[Teapotcoder]]></title>
+  
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://teapotcoder.com/"/>
+  <updated>2015-11-07T05:57:41.939Z</updated>
+  <id>http://teapotcoder.com/</id>
+  
+  <author>
+    <name><![CDATA[David Roberts]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Generate screenshots of hexo websites during build]]></title>
+    <link href="http://teapotcoder.com/post/generate-screenshots-of-website-during-build/"/>
+    <id>http://teapotcoder.com/post/generate-screenshots-of-website-during-build/</id>
+    <published>2015-11-07T06:00:00.000Z</published>
+    <updated>2015-11-07T05:57:41.939Z</updated>
+    <content type="html"><![CDATA[<p>In this post I continue detailing the <a href="/post/automated-install-of-octopus-deploy-server">automation of hexo.io</a> by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quickly check on content submissions.<br><a id="more"></a><br>Something you have to understand is asynchronous work in JavaScript. Callbacks, async, promises, promises, promises. I don’t need a promise, just need it to work. Eventually I chose the <a href="https://www.npmjs.com/search?q=async" target="_blank" rel="external">async</a> npm package because I got it to work and the <code>queue</code> made sense for the moment. The <code>queue</code> function will call the given task function for every item in the queue. Here is an example of using async.queue.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">"async"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Define the 'task' objects which</span></span><br><span class="line"><span class="comment">// will be passed into the queue function</span></span><br><span class="line"><span class="keyword">var</span> tasks = [</span><br><span class="line">     &#123;name: <span class="string">"John"</span>, age:<span class="number">42</span>&#125;,</span><br><span class="line">     &#123;name: <span class="string">"Susan"</span>, age:<span class="number">35</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create new queue passing in the function that will be</span></span><br><span class="line"><span class="comment">// called for every task object pushed to the queue</span></span><br><span class="line"><span class="keyword">var</span> queue = <span class="keyword">async</span>.queue(<span class="function"><span class="keyword">function</span>(<span class="params">task, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"%s is %d years old."</span>, task.name, task.age);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// If there was an error pass it into the callback</span></span><br><span class="line">  callback();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Define a function to be called when the last item</span></span><br><span class="line"><span class="comment">// in the queue is returned from the worker/task function</span></span><br><span class="line">queue.drain = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">"Last item returned from worker"</span>);</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">"Err (if any):"</span>);</span><br><span class="line">     <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Filling the queue</span></span><br><span class="line">queue.push(tasks[<span class="number">0</span>]);</span><br><span class="line">queue.push(tasks[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br></pre></td></tr></table></figure>
+<p>Each item will be processed concurrently if possible. There is no guarantee as to the order the task objects will be processed. So make sure to do some setup before hand if needed. You can view the <a href="https://github.com/techlahoma/okcsharp-website/blob/df853f0a9a337c4a8687cce82790960cdaf50530/screenshots.js" target="_blank" rel="external">whole file</a> on GitHub if you want. But I will be going over each part below.</p>
+<p>My goal for this step of my hexo site deployment is to generate screenshots. For that I use <a href="http://phantomjs.org/" target="_blank" rel="external">PhantomJS</a>. With PhantomJS I can simulate the browser at various window sizes and urls snapping screenshots along the way. First up, get the tools for the job. After installing PhantomJS and the <code>async</code> npm package I start a <code>screenshots.js</code> file.</p>
+<p>Get the needed modules for the script.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> system = <span class="built_in">require</span>(<span class="string">"system"</span>);</span><br><span class="line"><span class="keyword">var</span> webpage = <span class="built_in">require</span>(<span class="string">"webpage"</span>);</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">"async"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>The first two modules are provided by PhantomJS. <code>system</code> is how you interact with the machine. It’s what you use instead of <code>process</code> in Node. <code>webpage</code> is well, the webpage you are browsing with PhantomJS. <code>async</code> is what I’m using to handle the asynchronous work here.</p>
+<p>Setup the destination for the screenshots and the sizes of screenshots desired.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> destination = system.env[<span class="string">"CIRCLE_ARTIFACTS"</span>] || <span class="string">"screenshots"</span>;</span><br><span class="line"><span class="keyword">var</span> sizes = [</span><br><span class="line">	&#123; width: <span class="number">1024</span>, height: <span class="number">768</span> &#125;, <span class="comment">// Desktop</span></span><br><span class="line">	&#123; width: <span class="number">750</span>,  height: <span class="number">1334</span>&#125;  <span class="comment">// iPhone 6</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>Here is where we use <code>system</code> to get an environment variable or just use <code>screenshots</code> as a default when run locally. <code>CIRCLE_ARTIFACTS</code> is set by CircleCI during the build process. Once the build is done CircleCI will retain any files stored in that location along with the build. I did a short amount of Googling for the iPhone screenshot size so if it’s inaccurate just let me know.</p>
+<p>Next startup a new queue.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> queue = <span class="keyword">async</span>.queue(handle);</span><br><span class="line">queue.drain = done;</span><br><span class="line">queue.pause();</span><br><span class="line">primeTheQueue();</span><br></pre></td></tr></table></figure>
+<p>Specify the function that will <code>handle</code> the tasks. I also like to know when the process is complete. That’s what the <code>drain</code> member is for. The <code>done</code> method will be called once all is…well, done. The <code>queue.pause</code> may actually not be required, I have not really tested it but I know it does what it says. It pauses the queue from processing until told otherwise. That last call to <code>primeTheQueue</code> does just that. It loads up the queue with the tasks to process.</p>
+<p>Let’s look into how the tasks get into the queue first. Each task object looks like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name: <span class="string">"Name of page for display purposes"</span>,</span><br><span class="line">  url: <span class="string">"Full url of page to open"</span>,</span><br><span class="line">  page: &#123;PhantomJS webpage object&#125;,</span><br><span class="line">  size: &#123;width: x, height: y&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>name</code> and <code>url</code> should be obvious. The <code>page</code> and <code>size</code> are used to indicate a different step in the screenshot generation. I’ll get to them in just a bit so ignore them for the moment. Here is the <code>primeTheQueue</code> function:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">primeTheQueue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  queue.push(&#123;name: <span class="string">"home"</span>, url: <span class="string">"http://localhost:4000/"</span>&#125;, errorOut);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> home = webpage.create();</span><br><span class="line">  home.open(<span class="string">"http://localhost:4000/"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> firstPost = <span class="keyword">this</span>.evaluate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Getting first article"</span>);</span><br><span class="line">	  <span class="keyword">return</span> <span class="built_in">document</span>.querySelector(<span class="string">"section#main article:first-child a.article-title"</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	queue.push(&#123;name: <span class="string">"post"</span>, url: firstPost.href&#125;, errorOut);</span><br><span class="line">	queue.resume();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I always want screenshots of the home page so just add that immediately. But I also want a screenshot of the most recent post. To get that I need to open the webpage and find that first link. Create the webpage and open to the home page. The callback will then <code>evaluate</code> the css query selection on that webpage. That query selector path is specific to the layout of our website template. So it will be different for you most likely. It just finds the link to the first post on the page. Add a new task object to the queue with an appropriate name and the url from the webpage. I also add an <code>errorOut</code> function to report problems processing that particular task object.</p>
+<p>Next let’s take a look at the function that is called for each task object.</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">(task, callback)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(task.page === undefined) &#123;</span><br><span class="line">    open(task, <span class="keyword">callback</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    renderPage(task, <span class="keyword">callback</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Short and simple, it just passes onto an appropriate processing method based on if the url has been opened in PhantomJS already. If it has already been opened, as indicated by a defined <code>task.page</code> member on the task object, then render the page out to file. If it has not been opened then open it.</p>
+<p>Speaking of opening a url.</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">open</span><span class="params">(task, callback)</span> </span>&#123;</span><br><span class="line">  console.log(<span class="string">"Opening "</span> + task.name);</span><br><span class="line">  <span class="keyword">var</span> page = webpage.create();</span><br><span class="line">  </span><br><span class="line">  page.open(task.url, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; sizes.length; i++) &#123;</span><br><span class="line">      queue.push(&#123;name: task.name, size: sizes[i], page: <span class="keyword">this</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">callback</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>open</code> function will be called when a task object is to be processed but it does not have a defined <code>page</code> member. <code>open</code> creates the new PhantomJS <code>webpage</code> object; opens the url specified in the task object; then pushes additional task objects onto the same queue but providing the <code>webpage</code> object used to open that url. Note that it’s not just one task object for each url to open; it’s a task object per url per window size to render. That <code>callback</code> must be called for the queue to know that we have finished with this task object. If there was a problem we could pass the <code>callback</code> function an error object.</p>
+<p>Eventually the queue will have to process a task object that has been opened. Which the <code>handle</code> function will pass off to <code>renderPage</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderPage</span>(<span class="params">task, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Rendering "</span> + task.name + <span class="string">" at "</span> + task.size.width + <span class="string">"x"</span> + task.size.height);</span><br><span class="line">  <span class="keyword">var</span> page = task.page;</span><br><span class="line">  page.viewportSize = task.size;</span><br><span class="line">  page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: task.size.width, height: (task.size.height * <span class="number">2</span>) &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> renderPath = destination + <span class="string">"/"</span> + task.name + <span class="string">"-"</span> + page.clipRect.width + <span class="string">"x"</span> + page.clipRect.height + <span class="string">".png"</span></span><br><span class="line">  page.render(renderPath);</span><br><span class="line">  </span><br><span class="line">  callback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here we set the size of the <code>page</code>. That simulates the size of the browser window. The <code>clipRect</code> is set taller so that I grab more content. Think of it like taking a screenshot of a web page while scrolling down the page a bit more. Then just tell the <code>page</code> to render to the path defined. Using the name plus size gives me decently unique name for the file. Each build has it’s own artifacts so I’m not going to bump into a file from a previous build with the same name.</p>
+<p>The last functions are the ones for when the queue has been drained of all task objects, as well as an error function to report any problems when processing a task.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">done</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">  phantom.exit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errorOut</span>(<span class="params">ex</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ex !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"ERROR on task "</span> + ex);</span><br><span class="line">    phantom.exit();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Please note that it’s important to put the <code>phantom.exit();</code> inside the <code>done</code> function. If you put it outside of that (for example at the end of the js file) then your process will just sit there and do nothing. Why is that? Because if <code>phantom.exit();</code> was outside the functions it would get called before the queue is empty. Which would result in the <code>webpage</code> objects not responding. It’s important to pay attention to what actually happens at what time with asynchronous calls. It can get weird.</p>
+<p>Now just run the script.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phantomjs screenshots.js</span><br></pre></td></tr></table></figure></p>
+<p>Then check in the artifacts directory (screenshots locally). You should see some image files. Adding this to your CI process will depend on which tool you use. For CircleCI it’s an edit to your <code>circle.yml</code> file.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test:&#10;  override:&#10;    - npm install -g hexo-cli&#10;    - hexo server:&#10;        background: true&#10;    - sleep 2&#10;    - phantomjs ./screenshots.js</span><br></pre></td></tr></table></figure>
+<p>In CirceCI the <code>test</code> field in your yml file is what they use to run custom tests. What I’m doing here is making sure hexo is available for me to use. I start the <code>hexo server</code> just like you would do locally. This is what PhantomJS will call to get the website.</p>
+<p>Note that I specify that <code>background: true</code> field for the <code>hexo server</code> call. That’s special for CircleCI. Each command  is a separate SSH connection. So if you just <code>hexo server</code> the hexo server would stop running as soon as the SSH connection closed and moved onto the next command. But with that additional field set CircleCI knows to run that command in the background to keep it going even after the SSH connection closes.</p>
+<p>I sleep for a few seconds to give hexo time to generate. Two seconds is plenty of time. Then just run the screenshot script in PhantomJS. Once it’s done the ‘tests’ are complete. CircleCI will gather the artifacts which happen to be screenshots.</p>
+<p>There are a few improvements I want to make to this. Namely the ability to do more than just the home and the post, although I may call YAGNI on it. But I would like to use that excuse in order to get a better handle on the asynchronous patterns. I’d also like to make this a NPM package sometime. To make it easier for others to utilize this functionality.</p>
+<p>In my next post I’ll talk about using node.js to send those screenshots to a GitHub PR as a comment. Take a look at some of the closed pull requets on the <a href="https://github.com/techlahoma/okcsharp-website/pulls?q=is%3Apr+is%3Aclosed" target="_blank" rel="external">okcsharp website repository</a> to see what it looks like.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>In this post I continue detailing the <a href="/post/automated-install-of-octopus-deploy-server">automation of hexo.io</a> by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quickly check on content submissions.<br>]]>
+    
+    </summary>
+    
+      <category term="screenshots phantomjs hexo javascript circleci" scheme="http://teapotcoder.com/tags/screenshots-phantomjs-hexo-javascript-circleci/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Watch your artifacts web people]]></title>
+    <link href="http://teapotcoder.com/post/watch-your-artifacts-web-people/"/>
+    <id>http://teapotcoder.com/post/watch-your-artifacts-web-people/</id>
+    <published>2015-11-02T03:55:37.000Z</published>
+    <updated>2015-11-02T04:57:08.822Z</updated>
+    <content type="html"><![CDATA[<p>I just switched to using <a href="https://hexo.io/" target="_blank" rel="external">hexo.io</a> for my personal blog. But something was bugging me. A static site taking six to eight seconds to load? Must fix.<br><a id="more"></a><br>At first I thought it was just because I was using the <code>hexo server</code> command to test the site locally. But upon first deploying I still saw the same 6+ second delay in the site completely downloading. I pull up the developer console (happen to be using Edge which is very nice by the way) and look at the network activity of the site. Look at this (removed a few columns for space):</p>
+<p><img src="/images/long-load-time-network.png" alt=""></p>
+<p>CSS and font files? On a CDN? Taking a total of about six seconds to load? Taking a bit of a deeper look into what the Edge browser is telling me I notice those blue bars on the right. Most of the time connecting to <code>*.useso.com</code> is just connecting. <strong>Nothing</strong> is going on. Not sending the request or downloading a response. Just waiting for a connection to do anything.</p>
+<p>I needed to figure out where the request was being initiated from. At first I thought it was something in my template. Sort of. Searching for <code>fontstatic</code> yielded nothing. But I did find some <code>useso.com</code> stylesheets references. If you look at the network activity again you’ll see under the <code>Initiator/Type</code> it says ‘style’ for some of those font files. That means a style sheet is specifying the url. The other top ones are from ‘localhost’ (testing the site) so it’s directly from my HTML. If you follow the path (mentally speaking):</p>
+<ol>
+<li>Browser loads HTML</li>
+<li>HTML specifies stylesheet</li>
+<li>Browser loads stylesheets (top three from above)</li>
+<li>Stylesheet specifies font url</li>
+<li>Browser loads fonts (next five from above)</li>
+<li>Visitor closes page because my blog takes to long to load.</li>
+<li>Nothing here to see.</li>
+</ol>
+<p>So if I remove the stylesheet reference I solve the problem. But I need the stylesheet right? It came with the template. Unfortunately many of us have tendencies to <a href="http://teapotcoder.com/post/net-default-syndrome">stick with the default</a>. Well I decide to see how it will affect the page look and feel. I find the stylesheet reference to anything on useso.com and remove them:</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="keyword">link</span> href=<span class="string">"//fonts.useso.com/css?family=Source+Code+Pro:400,700"</span> rel=<span class="string">"stylesheet"</span> <span class="keyword">type</span>=<span class="string">"text/css"</span>&gt;  </span><br><span class="line">&lt;<span class="keyword">link</span> href=<span class="string">'//fonts.useso.com/css?family=Open+Sans:300,600'</span> rel=<span class="string">'stylesheet'</span> <span class="keyword">type</span>=<span class="string">'text/css'</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>Those two reference match the first two requests. Run the site again loading the currently deployed site side by side against my local one and…</p>
+<p>Nothing</p>
+<p>Not one single difference that is visible or noticable. There are other fonts being used; font awesome for instance. But those two references add no value to my site. They only cost it time. Checked the page load time now and it dropped by a full four seconds. Okay, so not the six seconds to 110 milliseconds I mentioned on twitter.</p>
+<blockquote><p>Page load time: 6 seconds. Remove two CDN css links that use about 4 fonts.<br>Page load time: 135 milliseconds<br>Watch your artifacts people</p>
+<footer><strong>@davidroberts63</strong><cite><a href="https://twitter.com/davidroberts63/status/660935770320990208" target="_blank" rel="external">twitter.com/davidroberts63/status/660935770320990208</a></cite></footer></blockquote>
+<p>But it wasn’t until I started writing this that I realized I was comparing network activity with an empty cache to one that had a full cache. Still three seconds is significant. Especially all that connecting time. I still don’t know what that’s all about. Any connections to *.useso.com did that. None of the others showed that kind of waiting to connect; including google analytics and disqus.</p>
+<p>To make a long story short; I did some optimization of my static blog because I thought it was taking to long to load (still is). But I did it after I got it working. When I compared the before and after of the removal I knew that I wasn’t going to have to put it back in later on. I didn’t accept the defaults and took a deeper look to make adjustments. But I didn’t go crazy right yet. I will still look into some bundling of stylesheets. Watch what you (and others) put into your websites.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I just switched to using <a href="https://hexo.io/">hexo.io</a> for my personal blog. But something was bugging me. A static site taking six to eight seconds to load? Must fix.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Automating static sites with Hexo.io, CircleCI and Github Pages]]></title>
+    <link href="http://teapotcoder.com/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/"/>
+    <id>http://teapotcoder.com/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/</id>
+    <published>2015-10-31T21:12:05.000Z</published>
+    <updated>2015-11-01T20:27:28.829Z</updated>
+    <content type="html"><![CDATA[<p>I recently became one of the organizers of the <a href="http://okcsharp.net" target="_blank" rel="external">OKCsharp</a> user group in Oklahoma City. They use <a href="http://hexo.io" target="_blank" rel="external">Hexo.io</a> to publish the user group static website onto Github. Hexo is a Node.js package that generates a static site and will update the appropriate <code>gh-pages</code> branch for Github to host.<br><a id="more"></a></p>
+<h4 id="Hexo-io">Hexo.io</h4><p>I’m not going into the use of Hexo; their website has very good documentation. Pay special attention to the <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Hexo deployment</a> section. That’s what I will be modifying a bit here in this post.</p>
+<p>I handle a large part of the automated development pipeline process where I work fulltime so the idea of doing a git pull and</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy <span class="comment">--generate</span></span><br></pre></td></tr></table></figure>
+<p>to deploy the website, although short and simple (much nicer than others I’ve used) is still so <strong>manual</strong>. It just feels…wasteful.</p>
+<p>So I fixed it with continuous integration.</p>
+<h4 id="Using_CircleCI">Using CircleCI</h4><p>I ended up using <a href="https://circleci.com" target="_blank" rel="external">CircleCI</a>. It’s fast. And I mean super fast. Much faster than TravisCI (and cheaper if you end up needing more). CircleCI will also build pull requests from forks which is awesome (so will TravisCI). Connect CircleCI to your Github account and have CircleCI ‘follow’ the appropriate repository. You will need a <code>circle.yml</code> file in your root of the repository to do this process.</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">deployment:</span><br><span class="line">  production:</span><br><span class="line">    branch: master</span><br><span class="line">    commands:</span><br><span class="line">      -<span class="ruby"> git config --global user.name <span class="string">"CircleCI"</span></span><br><span class="line"></span>      -<span class="ruby"> git config --global user.email <span class="string">"noone@okcsharp.net"</span></span><br><span class="line"></span>      -<span class="ruby"> sed -i<span class="string">''</span> <span class="string">"s~https://github.com/techlahoma/okcsharp-website.git~https://$&#123;GH_TOKEN&#125;:x-oauth-basic@github.com/techlahoma/okcsharp-website.git~"</span> _config.yml</span><br><span class="line"></span>      -<span class="ruby"> rm -rf .deploy_git/</span><br><span class="line"></span>      -<span class="ruby"> hexo clean</span><br><span class="line"></span>      -<span class="ruby"> hexo generate</span><br><span class="line"></span>      -<span class="ruby"> hexo deploy</span></span><br></pre></td></tr></table></figure>
+<p>The <code>production</code> name is just for the set of commands for the deployment; it has no other effect. The <code>branch</code> field tells CircleCI which branch this deployment will run for. In this case I only deploy the website when a commit to <code>master</code> is made. So pull requests will not trigger this. This lets us review a PR and then merge it to master when we want to. Then CircleCI handles the rest.</p>
+<p>The <code>commands</code> simply contain shell commands needed to deploy the hexo website to Github. That <code>sed</code> command is used to modify the deployment section of the hexo <code>_config.yml</code> file to allow it to deploy to Github with the appropriate token having commit permissions.</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># Deployment section <span class="keyword">of</span> hexo _config.yml</span><br><span class="line">## Docs: http:<span class="comment">//hexo.io/docs/deployment.html</span></span><br><span class="line">deploy:</span><br><span class="line">  <span class="class"><span class="keyword">type</span>: <span class="title">git</span></span></span><br><span class="line">  repository: https:<span class="comment">//github.com/techlahoma/okcsharp-website.git</span></span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure>
+<p>It changes the <code>repository</code> field to use basic OAuth.<br><figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">deploy</span>:</span><br><span class="line">  <span class="typedef"><span class="keyword">type</span>: git</span></span><br><span class="line">  repository: https://$&#123;<span class="type">Value</span> <span class="keyword">of</span> <span class="type">GH_TOKEN</span>&#125;:x-oauth-basic@github.com/techlahoma/okcsharp-website.git</span><br><span class="line">  branch: gh-pages</span><br></pre></td></tr></table></figure></p>
+<p>That <code>${GH_TOKEN}</code> is an environment variable set in the CircleCI web ui. You can generate that token in Github by going to your Github settings then <a href="https://github.com/settings/tokens" target="_blank" rel="external">Personal Access Tokens</a>. Put the token into the CircleCI project settings <a href="https://circleci.com/docs/environment-variables#custom" target="_blank" rel="external">environment variables</a>.</p>
+<h5 id="Environment_Variable_Security">Environment Variable Security</h5><p>A very important note about environment variables in CircleCI; environment variables specified in the <code>circle.yml</code> are available in fork builds. Environment variables specified in the CircleCI web UI are <strong>not</strong> available during fork builds. This is a security precaution. Anyone randomly could fork your public repo, modify the commands and have it export your sensitive environment variables to another server.</p>
+<p>After updating the hexo <code>_config.yml</code> file to be able to commit to Github appropriately the rest of the commands just run the appropriate hexo commands to generate and deploy the website.</p>
+<p>The end result is someone can send us a pull request containing a new post. We look it over and decide to merge it using the Github web UI. CircleCI is notified of that commit and takes care of the rest. In short:</p>
+<h4 id="One_click_hexo_deployments">One click hexo deployments</h4><p>Oh, that sounds like a good name for a talk. But before I get to that I need to mention that I didn’t stop there. In my next post I’ll describe how I generated screenshots of the PR and even put those screenshots onto the PR as a comment.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I recently became one of the organizers of the <a href="http://okcsharp.net">OKCsharp</a> user group in Oklahoma City. They use <a href="http://hexo.io">Hexo.io</a> to publish the user group static website onto Github. Hexo is a Node.js package that generates a static site and will update the appropriate <code>gh-pages</code> branch for Github to host.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[How I got in the world of software]]></title>
+    <link href="http://teapotcoder.com/post/how-i-got-in-the-world-of-software/"/>
+    <id>http://teapotcoder.com/post/how-i-got-in-the-world-of-software/</id>
+    <published>2015-03-30T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.836Z</updated>
+    <content type="html"><![CDATA[<p>Now, this is the story all about how<br>My life got flipped-turned upside down<br>And I’d like to take a minute, just sit right there<br>I’ll tell you how I became a coder in the world of software<br><a id="more"></a><br>In Oklahoma City, from a small computer store<br>On a XT dual floppies where I learned my trade<br>Hackin’ out, thinkin’, learnin’ the bits<br>And writin’ a B-ball card app inside BASIC</p>
+<p>When I sent in a card to get some college info<br>Called me up saying ‘hey we think we can help you’<br>I got in one small job a friend thought I’d do well<br>And I said, “This is the work that with life is swell”</p>
+<p>I typed out some VB for an inventory app<br>The users said it’s awesome, better than other smack<br>I went on to PHP…..left and never looked back<br>But I learned a lot in there, this world of software</p>
+<p>I left that first place after years of six or seven<br>And said to the next place “Yeah I can help ya”<br>Looked inside seeing imposter syndrome start<br>Still building with my co-workers in the world of software</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Now, this is the story all about how<br>My life got flipped-turned upside down<br>And I’d like to take a minute, just sit right there<br>I’ll tell you how I became a coder in the world of software<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Developing behind a proxy]]></title>
+    <link href="http://teapotcoder.com/post/developing-behind-a-proxy/"/>
+    <id>http://teapotcoder.com/post/developing-behind-a-proxy/</id>
+    <published>2015-03-03T06:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.832Z</updated>
+    <content type="html"><![CDATA[<p>Working behind a proxy can be annoying at times but it’s not difficult to work with, most of the time that is. This is mostly here for my own reference in the future and you get the added benefit.<br><a id="more"></a></p>
+<p>##GIT<br>You need to set two settings to allow git to use your proxy:</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global http.proxy "<span class="link_url">http://</span>[<span class="link_label">username</span>]:[password]@[address/url]:[port]"</span><br><span class="line">git config --global https.proxy "<span class="link_url">http://</span>[<span class="link_label">username</span>]:[password]@[address/url]:[port]"</span><br></pre></td></tr></table></figure>
+<p>Note both of the above settings. http.proxy and https.proxy.</p>
+<p>You may also need to turn off secure certificate verification. Why? Some places use a self signed certificates on the proxy for use with internal domain names.</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --<span class="keyword">global</span> http.sslVerify <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>##NPM<br>More proxy settings:<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set proxy "<span class="link_url">http://</span>[<span class="link_label">username</span>]:[password]@[address/url]:[port]"</span><br><span class="line">npm config set https-proxy "<span class="link_url">http://</span>[<span class="link_label">username</span>]:[password]@[address/url]:[port]"</span><br></pre></td></tr></table></figure></p>
+<p>Turning off secure certificate verification.</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config <span class="keyword">set</span> <span class="keyword">strict</span>-ssl <span class="keyword">false</span></span><br></pre></td></tr></table></figure>
+<p>Thank you to the following for their posts providing the above information:</p>
+<p><a href="">http://jjasonclark.com/how-to-setup-node-behind-web-proxy</a><br><a href="">http://stackoverflow.com/questions/783811/getting-git-to-work-with-a-proxy-server</a><br><a href="">http://stackoverflow.com/questions/12537763/git-ssl-without-env-git-ssl-no-verify-true</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Working behind a proxy can be annoying at times but it’s not difficult to work with, most of the time that is. This is mostly here for my own reference in the future and you get the added benefit.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[OctoPygmy]]></title>
+    <link href="http://teapotcoder.com/post/octopygmy/"/>
+    <id>http://teapotcoder.com/post/octopygmy/</id>
+    <published>2015-02-28T06:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.843Z</updated>
+    <content type="html"><![CDATA[<p>I am a great fan of Octopus Deploy. In the interest of improving it in any way I can I released a beta version of OctoPygmy, a Chrome extension for Octopus Deploy.<a id="more"></a>Right now it has the following features:</p>
+<ul>
+<li>Filter the dashboard by project groupings.</li>
+<li>Filter the machines by environment.</li>
+<li>Filter the machines by name or role.</li>
+</ul>
+<p>Where I work full time we have about 50 projects (never really counted) using Octopus Deploy. For the individual teams the dashboard is fine. They only see what they have access to. But for me and the team I’m on. We see all of them. It gets a bit tedious scrolling every where to find the right project that needs looking into on occasion. The dropdown that OctoPygmy adds makes it much easier to focus on the projects at hand for us.</p>
+<p><img src="/images/EnvironmentFilterSmall.png" alt=""></p>
+<p>Similar item for the machines (Tentacles). We have about 70+ machines at the moment being used with Octopus Deploy. There are many more in the company but not for apps. The environment dropdown helps focus on the environment and then the filter by name and role helps even further.</p>
+<p>I’ve read other articles where they have configurations with well over a 100 machines spread across multiple countries. I’m blown away by the scale that others are becoming much more effective and deploying more often in a repeatable way with Octopus Deploy. I hope that this extension finds them and helps them with their larger scale use of Octopus Deploy.</p>
+<p>It’s open source on github at davidroberts63/OctoPygmy. If you’d like to lend a hand just add an issue and lets talk a bit before you put work into it so we are all on the same page. Right now with this initial version 0.6 the source is not ideal. I want to do a few things before adding some more features, without to much of a delay that is:</p>
+<ul>
+<li>Add unit tests</li>
+<li>Get it on a continuous build, maybe Travis-CI or AppVeyor</li>
+<li>Refactor the code to get DRYer</li>
+<li>Look into moving away from the mutation events to start using the mutation observer.</li>
+</ul>
+<p>Later on I’d like to get a better logo for it. The round circle with eight sided starburst in the middle is what I (non-artist graphic person) did in five minutes using Sketch.io.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I am a great fan of Octopus Deploy. In the interest of improving it in any way I can I released a beta version of OctoPygmy, a Chrome extension for Octopus Deploy.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[The case for abstract IoC]]></title>
+    <link href="http://teapotcoder.com/post/the-case-for-abstract-ioc/"/>
+    <id>http://teapotcoder.com/post/the-case-for-abstract-ioc/</id>
+    <published>2014-12-15T06:00:00.000Z</published>
+    <updated>2015-11-01T20:44:58.425Z</updated>
+    <content type="html"><![CDATA[<p>I really value the IoC libraries out there and the features each one provides. I use one in nearly all the applications I write. Along with IoC libraries there has been the occasional discussion on abstracting it away from the application. I’m not a fan of this idea.<br><a id="more"></a><br>By abstracting the IoC I mean to abstract out the registration of classes and the resolving of the types during runtime. If I did both then I would lose the features of the library I chose because the abstraction has to go to the lowest common denominator of IoC features. Once I lost those features then I wonder why I picked that library over any other library at all.</p>
+<p>Many frameworks (<a href="http://www.asp.net/mvc" target="_blank" rel="external">ASP.NET MVC</a>, <a href="http://nancyfx.org" target="_blank" rel="external">Nancy</a>, <a href="http://mvc.fubu-project.org" target="_blank" rel="external">FubuMVC</a>) do abstract out the IoC. Mostly just the resolving of types but some also do the registration as well. Doing that in the framework is fine because it’s intended to be used by many different types of applications. But in the application itself I see no reason to abstract out the registration of classes. The rest of the application should rely on the dependency injection the IoC provides. Any application factories can require an abstracted resolver  since that should just be providing the ability to resolve a type.</p>
+<p>If I try to convince myself that abstracting the IoC library would be beneficial I simply remember that I will always have to learn the new IoC library API. I feel the abstraction would give me a false sense of security when switching IoC libraries. If switching IoC libraries turns out to be difficult then I likely used the IoC in the wrong way in my application.</p>
+<p>I’ll keep the registration of classes in the IoC soley in my application startup, keep the unique features of the IoC library and know what the IoC is doing with my classes.</p>
+<p>The case for abstracting IoC libraries doesn’t exist for my application, but it can for a framework.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I really value the IoC libraries out there and the features each one provides. I use one in nearly all the applications I write. Along with IoC libraries there has been the occasional discussion on abstracting it away from the application. I’m not a fan of this idea.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[I did TDD wrong]]></title>
+    <link href="http://teapotcoder.com/post/i-did-tdd-wrong/"/>
+    <id>http://teapotcoder.com/post/i-did-tdd-wrong/</id>
+    <published>2014-10-13T05:00:00.000Z</published>
+    <updated>2015-11-01T20:55:02.777Z</updated>
+    <content type="html"><![CDATA[<h4 id="My_mind_still_thinks_procedurally-">My mind still thinks procedurally.</h4><p>I like TDD, I really do. I’m just doing it wrong. TDD is about DRIVING the design. But many people (and evidently myself) just do it in a ‘Test First’ way. That really doesn’t give you much of an advantage other than a higher code coverage.<a id="more"></a>Which is nice on it’s own. However you don’t really get the full benefit that TDD is going for. Driving the design by using your tests doesn’t say ‘You need to write the test first’, it requires that to be done by it’s definition in order for your test to drive the design. I will give a recent example of my own that illustrates the point.</p>
+<p>I needed to create a process that would inform people of updates to things. Let’s just say it is updates to RSS feeds you follow. In a procedural way and mentally I imagine for most of us it would go like this.</p>
+<ul>
+<li>Get the list of RSS feeds to find updates about</li>
+<li>Go get the updates about those RSS feeds</li>
+<li>Associate the updates to the people that want to know about them</li>
+<li>Tell the people about their RSS feed update.</li>
+</ul>
+<p>How I did it the wrong way was I wrote some tests first to make sure I could get the updates about the RSS feeds (second step). This was done in a class definition. At first this seems okay, and it was for the most part. Where I failed is the next thing I did. I wrote a test for the first step (list of rss feeds) WITHOUT a test that made me need to do that step. This is the important part. If you don’t write a test that causes you to need to do that step stop writing. The test driving the design should fall across something that is missing at some point. It might be a method, a class, a whole library, anything. Many times writing the test will likely not compile (in whatever fashion your language compiles) when you discover the next step.</p>
+<p>With TDD you should write a test to accomplish that first goal and drive the design to something effective, simple and maintainable. Nothing more and nothing less. Don’t think about the latter steps. Just focus on that one. Then do it again for any requirement to get that first step to complete. Repeat that process for each subsequent step. Also, focus in on one thing. Don’t try to stuff everything into one flow. When you get done with step one consider that you may be done with that thing/class/object. You may in fact need to have a separate object for the next step.</p>
+<p>As you complete each step of your process you can and should look at how you solved it and potentially refactor the code. Remember refactoring is not intended to change behavior; just how you go about accomplishing the behavior. Your test should change minimally if at all.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h4 id="My_mind_still_thinks_procedurally-">My mind still thinks procedurally.</h4><p>I like TDD, I really do. I’m just doing it wrong. TDD is about DRIVING the design. But many people (and evidently myself) just do it in a ‘Test First’ way. That really doesn’t give you much of an advantage other than a higher code coverage.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Show & Tell: Powerargs]]></title>
+    <link href="http://teapotcoder.com/post/show-tell-powerargs/"/>
+    <id>http://teapotcoder.com/post/show-tell-powerargs/</id>
+    <published>2014-06-27T05:00:00.000Z</published>
+    <updated>2015-11-01T20:57:27.939Z</updated>
+    <content type="html"><![CDATA[<p>About a month ago I finished a contribution to the <a href="http://github.com/adamabdelhamed/PowerArgs" target="_blank" rel="external">PowerArgs</a> project and <a href="/fork-pull-powerargs">wrote about it</a>. A week or two later I thought it would be a great idea to make my first screen cast about it.<br><a id="more"></a><br><div class="video-container"><iframe src="//www.youtube.com/embed/Egw6toDINdA" frameborder="0" allowfullscreen></iframe></div></p>
+<p>The <a href="http://github.com/adamabdelhamed/PowerArgs" target="_blank" rel="external">PowerArgs</a> project is a very nice one and I plan on contributing more to this project as I hope you will consider the same. I also hope you consider using it in your projects where you need command line parsing.</p>
+<p>I learned a lot from this first screen cast of mine. I am going to look into <a href="http://www.telestream.net/screenflow" target="_blank" rel="external">Screenflow</a>, <a href="http://www.shinywhitebox.com/ishowu-v1" target="_blank" rel="external">iShowU</a>, or <a href="http://www.techsmith.com/camtasia" target="_blank" rel="external">Camtasia</a> depending on how often I do screencasts. Also trying to figure out how to handle it with my Windows VM on the Mac. Any suggestions are appreciated.</p>
+<p>Thanks for watching and hope you have a great day! Come back again.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>About a month ago I finished a contribution to the <a href="http://github.com/adamabdelhamed/PowerArgs">PowerArgs</a> project and <a href="/fork-pull-powerargs">wrote about it</a>. A week or two later I thought it would be a great idea to make my first screen cast about it.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Fixing my own blunder with powershell]]></title>
+    <link href="http://teapotcoder.com/post/fixing-my-own-blunder-with-powershell/"/>
+    <id>http://teapotcoder.com/post/fixing-my-own-blunder-with-powershell/</id>
+    <published>2014-06-16T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.834Z</updated>
+    <content type="html"><![CDATA[<p>I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from the default (oh no). There are different reasons for that which have now been totally debunked. The service that uses java (Subversion Edge in this case) has a windows service with a path to Java at the time (the non default path).<br>Then a patch got applied.</p>
+<p>It uninstalled the original one and installed the updated one in the default location. So now the windows service is trying to run Java from a location that no longer exists. So how does one fix such a problem given that you can’t change the path the windows service is using from the user interface?</p>
+<p><strong>Power</strong>shell</p>
+<p>Thanks to <a href="http://4sysops.com/jeffery-hicks/" target="_blank" rel="external">Jeffery Hicks</a> and his posts on <a href="http://4sysops.com/archives/managing-services-the-powershell-way-part-6/" target="_blank" rel="external">Managing Services the Powershell way</a> I was able to very easily correct the executable path of that service.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$theService</span> = <span class="built_in">Get-WmiObject</span> win32_service -Filter <span class="string">"name='CSVNConsole'"</span></span><br><span class="line"></span><br><span class="line"><span class="variable">$updatedPath</span> = <span class="variable">$theService</span>.PathName.Replace(<span class="string">'E:\MyOldPathToJava'</span>, <span class="string">'C:\Program Files\Java\jre7'</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable">$theService</span> | Invoke-WmiMethod -Name Change -ArgumentList @(<span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$null</span>, <span class="variable">$updatedPath</span>) | Select ReturnValue</span><br><span class="line"></span><br><span class="line"><span class="comment"># Verify the change took.</span></span><br><span class="line"><span class="built_in">Get-WmiObject</span> win32_service -Filter <span class="string">"name='CSVNConsole'"</span> | Select *</span><br><span class="line"></span><br><span class="line"><span class="built_in">Start-Service</span> CSVNSonsole</span><br></pre></td></tr></table></figure>
+<p>When using the <code>Invoke-WmiMethod</code> it’s important to know what the order of parameters is. What’s documented may not be correct. so use <code>$theService.GetMethodParameters(&quot;Change&quot;)</code> to determine the proper order. Ignore those that start with an underscore.</p>
+<p>All of this is in very good detail at Jeffery Hicks’ blog about this.</p>
+<p>On a side note be sure to use <code>Start-Transcript</code> when working on stuff like this. It’s wonderful to be able to go back and read everything that you did and what the outcome of it was.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I installed a service a while back that uses Java. When I installed it I followed with a flow of installing Java to a different path from]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Vagrant for development environments]]></title>
+    <link href="http://teapotcoder.com/post/vagrant-for-development-environments/"/>
+    <id>http://teapotcoder.com/post/vagrant-for-development-environments/</id>
+    <published>2014-06-08T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.848Z</updated>
+    <content type="html"><![CDATA[<p>I have been using <a href="http://www.vagrantup.com/" target="_blank" rel="external">Vagrant</a> for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host machine clean from inadvertent changes.<br><a id="more"></a><br>When I do the lite development with Ruby or Python I use Vagrant to manage the runtime environment. I continue to actually write the code using my host machine. This way I can use my Sublime and other development tools setup across all the development machines. Then I can quickly change the runtime, testing environment without affecting the writing envirnonment.</p>
+<p>You can use the ‘<a href="http://docs.vagrantup.com/v2/synced-folders/basic_usage.html" target="_blank" rel="external">config.vm.synced_folder</a>‘ property in the Vagrantfile to keep a host folder synced up as a mounted folder on your guest Linux machine. From that point if you clone your repository into that folder on your host machine You will also have them in your guest machine.</p>
+<p>You may also keep your Vagrantfile under version control. Just check it out to a separate folder. I do this so I can use the same vagrant setup for multiple environments when needed.</p>
+<p>Vagrant checkout of Ruby Vagrant config (Vagrantfile and puppet/ansible config)</p>
+<p><code>/Users/johndoe/devenvironments/rubydev</code></p>
+<p>Ruby project checkout</p>
+<p><code>/Users/johndoe/development/my-project</code></p>
+<p>I set the ‘config.vm.synced_folder’ to the <code>/Users/johndoe/development</code> folder. Change to the rubydev folder on my host and <code>vagrant up</code>. In the vm I can change to that dir using the name I specified in the vagrantfile. In this case <code>/development</code></p>
+<p><code>config.vm.synced_folder &quot;/Users/johndoe/development&quot;, &quot;/development&quot;</code></p>
+<p>I continue writing in my host but runtime, web server (via forwarded ports) and testing are in the vm. This does cause me to switch between host and guest when checking test results or dealing with gems. I would like to get growl setup to talk to the host from the guest so that my test results show as I’m writing within my host machine. But that’s for a later time.</p>
+<p>Note this also works for .NET development in Windows. Same principle just a different OS. I’m currently using Puppet to manage the configuration. Not sure of the road map of Windows support in Ansible yet.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I have been using <a href="http://www.vagrantup.com/">Vagrant</a> for my development environments for about six months now. It’s a wonderful setup that eases the ability to keep different configurations separate as well as to keep my host machine clean from inadvertent changes.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Strong Naming .NET and Key Containers]]></title>
+    <link href="http://teapotcoder.com/post/strong-naming-net-and-key-containers/"/>
+    <id>http://teapotcoder.com/post/strong-naming-net-and-key-containers/</id>
+    <published>2014-06-03T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.845Z</updated>
+    <content type="html"><![CDATA[<p>There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key container.<a id="more"></a> I’ll just get right to the situation and the point.</p>
+<p>I’m strong naming assemblies primarily so they can be added to the GAC. Can’t let the full pfx sit on the developers’ laptops for security concerns. Delay signing just seems like it’s going to cause more troubles than it is worth. Since we are using a central build server I’m just telling msbuild to sign the assemblies on the fly. Yeah for automation!</p>
+<p>When you do that by specifying the <code>AssemblyOriginatorKeyFile</code> msbuild property and that file is password protected (a pfx file) then msbuild will complain about the password. It will also tell you that you can import it into a key container with a name that msbuild has specified. So I do that. Well, not me really but the security team. They are the ones with the password anyway.</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:<span class="command">\Program</span> Files (x86)<span class="command">\Microsoft</span> SDKs<span class="command">\Windows</span><span class="command">\v</span>8.0A<span class="command">\bin</span><span class="command">\NETFX</span> 4.0 Tools<span class="command">\sn</span>.exe -i <span class="special">[</span>PATH_TO_YOUR_PFX_FILE<span class="special">]</span> <span class="special">[</span>KEY_FROM_MSBUILD_ERROR_OUTPUT<span class="special">]</span></span><br></pre></td></tr></table></figure>
+<p>The import is tied to the contents of the file. Not the file name or the path.</p>
+<p>Now from my thinking the key is inside that key container; so I don’t need to use the <code>AssemblyOriginatorKeyFile</code> property anymore right? To back that up there is another msbuild property called <code>AssemblyKeyContainerName</code>, heck there’s even one called <code>AssemblyKeyName</code> although that’s in an extension pack. So out with <code>AssemblyOriginatorKeyFile</code> and in with <code>AssemblyKeyContainerName</code>.</p>
+<p><strong>Nope.</strong></p>
+<p>Doesn’t work. No one’s going to tell you directly either.</p>
+<p>I assumed something. We all know what that means.</p>
+<p>If you do import the password protected pfx into that key container then you still must specify that <code>AssemblyOriginatorKeyFile</code> pointing to the pfx file. MSBuild will look in its container for the private key data corresponding to that file you specified and the container it told you earlier.</p>
+<p>Oh and the <code>AssemblyKeyContainerName</code> msbuild property does absolutely nothing as far as I can tell. I wish it did because the container name that msbuild wants (VS_KEY_RANDOMALPHANUM) is nice and ugly.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>There’s a lot of documentation about strong naming .NET assemblies. Most talk about using an open strong name file (snk). Some talk about the password protected file (pfx). Even fewer mention the key container.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Fork & Pull: Powerargs]]></title>
+    <link href="http://teapotcoder.com/post/fork-pull-powerargs/"/>
+    <id>http://teapotcoder.com/post/fork-pull-powerargs/</id>
+    <published>2014-05-29T05:00:00.000Z</published>
+    <updated>2015-11-01T20:59:14.661Z</updated>
+    <content type="html"><![CDATA[<p>I came across the <a href="http://github.com/adamabdelhamed/PowerArgs" target="_blank" rel="external">PowerArgs</a> command line parsing .NET library while exploring the latest updated repositories on <a href="http://github.com" target="_blank" rel="external">Github</a> looking for a project to contribute to. Checking its <a href="http://github.com/adamabdelhamed/PowerArgs/pulse" target="_blank" rel="external">pulse</a> was encouraging and it had a simple enough <a href="https://github.com/adamabdelhamed/PowerArgs/issues/11" target="_blank" rel="external">issue</a> for me to cut my teeth on for the project.<a id="more"></a>It was not until halfway through my work on that issue that I discovered that the attention grabbing project <a href="http://scriptcs.net/" target="_blank" rel="external">ScriptCS</a> uses it. Wonderful! I say to myself and forge ahead improving the project the little bit that I can.</p>
+<p>Oh, and it has tests. Note to other projects, you have tests? Yes? Good, thank you. That helps me know when I screw up.</p>
+<p>You can see by the <a href="https://github.com/adamabdelhamed/PowerArgs/issues/11" target="_blank" rel="external">execptions issue</a> comments that someone else was trying to get to this item. However it seemed as though time eluded that individual. I do hope that person is able to contribute in the future.</p>
+<p>I prefer to give some notice of intent to contribute so as to avoid duplication of work if someone else is already working on it. A few days to give others a chance to chime in sounded like a decent notice and that it was. <a href="https://github.com/adamabdelhamed" target="_blank" rel="external">Adam</a> is nice to work with. Responded in a good amount of time and was appreciative of my <a href="https://github.com/adamabdelhamed/PowerArgs/pull/19" target="_blank" rel="external">contribution</a>. I’m glad he asked what my approach to the issue would be as this is a good sign of project invovlement and forces contributors to think a bit before making serious modifications.</p>
+<p>I did make some changes to the tests that are a bit different from the rest of the tests. Any tests that I touched I renamed to describe what was being tested in a bit more detail. Following the ‘ThingDoesActionWhenSituation’ and ‘ThingThrowsWhenSituation’ somewhat. Also adusted how some of the assertions were being performed. I see a lot of people (in several other projects) using Assert.IsTrue when an AreEqual can provide better feedback when the test fails. AreEqual will tell you what the actual data that came back is so you can better determine what the problem is.</p>
+<p>I did offer to revert the naming and assertion changes I had made. They are my opinonated changes but I will always defer to the owner and main contributors to follow the project style if they request. It’s important to balance moving the code in a direction with keeping it consistent across contributors. This helps the readability of the code so you don’t find your self context switching just because someone else wrote the code.</p>
+<p>I may end up working on another issue <a href="https://github.com/adamabdelhamed/PowerArgs/issues/17" target="_blank" rel="external">multiple shortcuts</a>. <a href="https://twitter.com/gblock" target="_blank" rel="external">Glenn Block</a> himself has requested it. I might just contact him online to see if it’s still an issue for him.</p>
+<p>Overall, I’m glad that I was able to help. I hope to help some more. Take a look at it yourself and make your command line argument parsing so much easier. You can get it via <a href="http://nuget.org/packages/PowerArgs/" target="_blank" rel="external">Nuget</a> as well. I’ll be posting a short 10 minute video on it as sort of a show and tell soon so be sure to keep an eye out for that as well.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I came across the <a href="http://github.com/adamabdelhamed/PowerArgs">PowerArgs</a> command line parsing .NET library while exploring the latest updated repositories on <a href="http://github.com">Github</a> looking for a project to contribute to. Checking its <a href="http://github.com/adamabdelhamed/PowerArgs/pulse">pulse</a> was encouraging and it had a simple enough <a href="https://github.com/adamabdelhamed/PowerArgs/issues/11">issue</a> for me to cut my teeth on for the project.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[Automated Install of Octopus Deploy Server]]></title>
+    <link href="http://teapotcoder.com/post/automated-install-of-octopus-deploy-server/"/>
+    <id>http://teapotcoder.com/post/automated-install-of-octopus-deploy-server/</id>
+    <published>2014-05-13T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.827Z</updated>
+    <content type="html"><![CDATA[<p>I have been using Octopus Deploy for a while at work and now upgrading to their 2.0 line. It’s a wonderful product and you should check it out if you haven’t yet. One of the things I always want to do is automate the install of application infrastructure items (such as this) so that I can burn and build the servers. This allows me to be better prepared for server outages.<br><a id="more"></a><br>One of the great things about Octopus Deploy 2.X is that at the end of the server configuration wizard you have the option to get the script to reproduce the configuration.</p>
+<p><img src="/images/OctopusDeployConfigureScript.png" alt=""></p>
+<p>The only missing part is the actual installation of the Octopus Deploy server files. The running of the msi. It’s simple enough to automate as most msi installers are:</p>
+<script src="//gist.github.com/3e0a05579e883476fac6.js?file=Install-OctopusServer.ps1"></script>
+<p>Notice that I take the given script and use it within Powershell. Using the Start-Process with the -Wait and -Verb RunAs keeps the commands running in sequence and as the running account. Powershell needs to be running as an administrator in this case or it won’t install.</p>
+<p>Then run your script that you got from the Octopus Setup Wizard. Here’s my complete script:</p>
+<script src="//gist.github.com/3e0a05579e883476fac6.js?file=InstallConfigure-OctopusDeployServer.ps1"></script>
+<p>The only thing I have not figured out is how to set the RavenDb backup location via this wizard or command line configuration. You can do it via the website api (though I have not verified it myself yet). The only problem is that you won’t know what the admin user api key is until you logon to the website. At that time you might as well just set the backup location manually. It is not a problem, just a small change that I know I will always do.</p>
+<p>Overall I really like this installation process, especially the providing of the script. It was very simple and fluid. The Octopus Deploy team puts a lot of thought into this and it shows.</p>
+<p>If you don’t see the embedded gists above just use the links. I’m having a bit of trouble with embedded gists at the moment</p>
+<p>Update</p>
+<p>I just caught up on my blog reading and the Octopus Deploy team has released the server and tentacle as Chocolatey packages. If your server can access chocolatey.org then it’s even easier. Check the octopus blog for details. <a href="http://octopusdeploy.com/blog/cinst-octopusdeploy" target="_blank" rel="external">http://octopusdeploy.com/blog/cinst-octopusdeploy</a></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I have been using Octopus Deploy for a while at work and now upgrading to their 2.0 line. It’s a wonderful product and you should check it out if you haven’t yet. One of the things I always want to do is automate the install of application infrastructure items (such as this) so that I can burn and build the servers. This allows me to be better prepared for server outages.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[NancyFX Testing with an authenticated user]]></title>
+    <link href="http://teapotcoder.com/post/nancyfx-testing-with-an-authenticated-user/"/>
+    <id>http://teapotcoder.com/post/nancyfx-testing-with-an-authenticated-user/</id>
+    <published>2014-05-08T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.841Z</updated>
+    <content type="html"><![CDATA[<p>I’ve been trying <a href="http://nancyfx.org" target="_blank" rel="external">NancyFx</a> lately and ran across a bit of a misunderstanding on my part and a minor missing point in the Nancy documentation. I’m testing my modules and some require authentication.<a id="more"></a> By way of:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.RequiresAuthentication();</span><br></pre></td></tr></table></figure>
+<p>The <a href="https://github.com/NancyFx/Nancy/wiki/Authentication-overview#what-did-you-say-your-name-was-again" target="_blank" rel="external">Authentication</a> documentation for Nancy states that if the <code>NancyContext.CurrentUser</code> property is <code>null</code> then the current request has not been authenticated otherwise the request has been authenticated. Well, not quite. Nancy checks that <code>CurrentUser</code> property for null. It also checks that the <code>UserName</code> property is not empty. So be sure that your identity has the <code>UserName</code> set which is almost always the case.</p>
+<p>But for testing I usually setup the minimum amount of data required to keep the distractions as low as possible. What I also do for testing is create a custom bootstrapper just for use in my tests.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">BootstrapperWithLoggedInUser</span> : <span class="title">MyApplicationCustomBootstrapper</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> <span class="title">RequestStartup</span>(<span class="params">TinyIocContainer container, IPipelines pipelines, NancyContext context</span>)</span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="keyword">base</span>.RequestStartup(container, pipelines, context)</span><br><span class="line"></span><br><span class="line">        context.CurrentUser = <span class="keyword">new</span> MyApplicationUserIdentity() &#123; UserName = <span class="string">"Douglas Adams"</span> &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>That bootstrapper sets up every request with a logged in user. So I don’t have to do it on every request in my tests on the <code>BrowserContext.FormsAuth</code>. What I initially did in the bootstrapper was not specify a <code>UserName</code> for the current user. Everything kept getting redirected to the login page. Once I set the username everything started working correctly in my tests.</p>
+<p>For those that may be interested the code in Nancy that does the actual checking for an authenticated user is the <a href="https://github.com/NancyFx/Nancy/blob/master/src/Nancy/Security/UserIdentityExtensions.cs#L19-21" target="_blank" rel="external">UserIdentityExtensions.cs</a> file in Nancy.Security.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I’ve been trying <a href="http://nancyfx.org">NancyFx</a> lately and ran across a bit of a misunderstanding on my part and a minor missing point in the Nancy documentation. I’m testing my modules and some require authentication.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[To Build and Deploy]]></title>
+    <link href="http://teapotcoder.com/post/to-build-and-deploy/"/>
+    <id>http://teapotcoder.com/post/to-build-and-deploy/</id>
+    <published>2014-05-07T05:00:00.000Z</published>
+    <updated>2015-11-01T21:01:16.150Z</updated>
+    <content type="html"><![CDATA[<p>The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If you don’t build it you can’t deploy it and if you don’t deploy it what’s the point?<a id="more"></a>Educational projects are the exception here since they may not be intended to go to production.</p>
+<p>In light of that I prefer to have an automated process do as much as possible for me. Preferrably not on my own machine. So that I am not interrupted during my regular work flow and I can trust the process is done consistently and timely. You can read most of that in two words “Be lazy”.</p>
+<p>If you don’t have an automated build and an automated deployment process you are really missing out on some great productivity gains. As well as a big boost of confidence in your work. Depending on your business environment you may <strong>need</strong> to have a central automated build and deployment process for legal auditing and regulation requirements.</p>
+<p>####Here are a few things you have to deal with when you don’t have a central automated build.</p>
+<ul>
+<li>No guarantee the artifacts were produced from the code as in source control <a href="#note1" id="source1"><sup>1</sup></a>. Since you could make changes locally before building and forget to commit those changes.</li>
+<li>Build and test <a href="#note2" id="source2"><sup>2</sup></a> problems take much longer to discover. Since you only build when you feel like it. How many times have you forgotton to add a file properly?</li>
+<li>Where is the latest build? Oh Joe did it and it’s on the NAS, or wait Bob did it and I think he put it on the NAS but he was heading home so not sure. Nevermind I’ll do it right now for you…awww man build errors great, just great.</li>
+<li>What version of the source code did this build come from? This is very important in defect tracking and audits.</li>
+<li>Lack of consistent build environment. You have one version of the build and test tools. Other team members may have a different version of the build and test tools. Now the build is inconsistent and may break for difficult to track reasons.</li>
+</ul>
+<p>Sure it’s easy to just build the solution right on your machine, you do it all the time during the development process. But so many things can go wrong because <em>you</em> are involved in the process. People cause all sorts of problems because we get easily distracted by just about anything.</p>
+<h4 id="And_if_you_don’t_have_a_central_automated_deployment-">And if you don’t have a central automated deployment.</h4><ul>
+<li>No guarantee that what is deployed came from an offical set of build artifacts. Who knows what was put in production with this deployment. Yes even if scripted. Since you are deploying from your local machine you can easily introduce some oddity.</li>
+<li>Modified deployment process problems take longer to discover. You may have added a deployment step while others have changed existing ones. You won’t know until all of it comes together.</li>
+<li>Inconsistent deployment environment. Different versions of deployment tools.</li>
+<li>Less to no visibility of recurring deployment problems.</li>
+<li>Ability to audit is pretty much nil. Because of each of the other problems it would be very difficult to prove what actually happened.</li>
+<li>No real way to determine if what is in production differs from what was supposed to be deployed. This could be useful if you belive production has been cracked or infected. The reason why you can’t is because there is no definitive source of what went to production.</li>
+</ul>
+<p>####When automated build and deployment is probably not needed</p>
+<p>If your team is super small say no more than three people then setting up a central automated build and deployment process <strong>might</strong> be more work than it would be worth. Be sure to take into consideration auditing and regulatory compliance. Most applications may not need to think about that but when you do you had better think about it or it will seriously hurt later on.</p>
+<p>####So what’s the deal?</p>
+<p>A consistent, traceable, repeatable build and deployment process can and usually does instill more trust within your organization. This will allow you to deploy much quicker and shorten the feedback cycle so you can know when you are doing right and wrong earlier in the development process. <a href="http://twitter.com/datachomp" target="_blank" rel="external">Rob Sullivan</a> calls this “Success feeds Success”.</p>
+<p>You may not think it is important now but later on when that deadline is looming overhead and you need to get features out faster you would be much better off with an automated build and deployment process. It is one less thing for you to think about since it will just work for you not against you. I’ll write a few posts about different ways to have an automated build and deployment process so keep an eye out.</p>
+<h5 id="Footnotes">Footnotes</h5><ol>
+<li>Not using version control? Different discussion, bigger problem. <a id="note1" href="#source1">go back</a></li>
+<li>No tests? Different discussion, bigger problem. <a id="note2" href="#source2">go back</a></li>
+<li>Thanks to <a href="http://www.twitter.com/jeff_french" target="_blank" rel="external">Jeff French</a> and <a href="http://www.twitter.com/apapadimoulis" target="_blank" rel="external">Alex Papadimoulis</a> for their talks at <a href="http://kcdc.info" target="_blank" rel="external">kcdc13</a> that gave me the last couple of points I needed to finish this post.</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>The end goal of every software development project should be to build it and deploy it. Not every language has a ‘build’ step but in that case I consider running your tests to be part of the build. If you don’t build it you can’t deploy it and if you don’t deploy it what’s the point?]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[LastPass Lessons Learned]]></title>
+    <link href="http://teapotcoder.com/post/lastpass-lessons-learned/"/>
+    <id>http://teapotcoder.com/post/lastpass-lessons-learned/</id>
+    <published>2014-04-11T05:00:00.000Z</published>
+    <updated>2015-11-01T20:27:28.839Z</updated>
+    <content type="html"><![CDATA[<p>I really like using <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>. In the wake of the <a href="http://heartbleed.com/" target="_blank" rel="external">HeartBleed</a> fiasco I knew I should change several of my passwords as should you.<a id="more"></a>Just make sure the site you are changing your password on has fixed their certificate or you will still be open to the same vulnerability. Anyway the reason for this post is because I decided to change my <strong>master</strong> password on <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> last night about 10pm. In the back of my mind I was thinking this was a bad idea and should do it in the morning. But no fear I’m good with my passwords, I have a system.</p>
+<h2 id="It-_Failed-">It. Failed.</h2><p>First thing to clear up. I don’t use passwords. I use pass<strong>phrases</strong>. That is my ‘password’ is a longer string of text more akin to a sentence with stuff thrown in. See the <a href="http://xkcd.com/936/" target="_blank" rel="external">XKCD</a> for an idea. Maximum password lengths of 20 or less really bug me. Also <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> does not have access to your password and cannot reset it to a dummy value. All the encryption happens on your computer and then passes the encrypted data up to their servers. They couldn’t open my data if they or anyone else forced them to. That’s one of the top reasons I picked <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>.</p>
+<p>So last night I change my pass<strong>phrase</strong> feeling good about protecting my data. This morning I login to <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> and recive the ‘invalid login’ message. No fear it happens to me on occasion with the longer passwords I hit the wrong key. Try again and it should be fine. Nope. Slloowwly try again finger pecking this time, nothing. Now I’m officially sweating and co-workers are asking if I am okay. I start making a list of possible alternatives I may have inadvertently used last night. Casing, spacing, number, punctuation you name it I tried it. I was about to give up hope. But <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> sent me my hint as I had requested it and it had a link to ‘Account Recovery’.</p>
+<p>And there in lay rescue. The last ditch effort that <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> offers is to revert your vault. This is truly a final option and a severe one depending on your situation. It just so happens to be one I was hoping that they would have. The reverting your vault option will restore a backup of your vault to the one just prior to the last master password change. It’s very effective for just my situation, having changed my password but done forgot it. Click revert; wait for the server to rescue my data and voila! Login with my old password and everything is right as rain again.</p>
+<p>Just be sure to have access to your email account that your <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> account is setup to send security emails too. Fortunately I don’t use <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> to login to that particular email address to force me to have that password in mind all the time. For those that are concerned about the revert capability you can turn it off in your account settings.</p>
+<p>Again, I really enjoy the <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> service. But I need to get a backup plan in place for this data just in case I totally lose my memory.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I really like using <a href="https://www.lastpass.com">LastPass</a>. In the wake of the <a href="http://heartbleed.com/">HeartBleed</a> fiasco I knew I should change several of my passwords as should you.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[OKC DG ServiceStack]]></title>
+    <link href="http://teapotcoder.com/post/okc-dg-servicestack/"/>
+    <id>http://teapotcoder.com/post/okc-dg-servicestack/</id>
+    <published>2014-03-21T05:00:00.000Z</published>
+    <updated>2015-11-01T21:03:00.817Z</updated>
+    <content type="html"><![CDATA[<p>I’ll be presenting <a href="http://www.servicestack.net/" target="_blank" rel="external">ServiceStack</a> at the April meet up of the <a href="http://www.okcdg.org" target="_blank" rel="external">OKC Developers Group</a>.<a id="more"></a>The presentation starts at 11:30 with food and drink included (usually pizza). It lasts about an hour and there are drawings for prizes at the end. So come to hear about <a href="http://www.servicestack.net/" target="_blank" rel="external">ServiceStack</a> and to talk to other developers.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>I’ll be presenting <a href="http://www.servicestack.net/">ServiceStack</a> at the April meet up of the <a href="http://www.okcdg.org">OKC Developers Group</a>.]]>
+    
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[.NET Default Syndrome]]></title>
+    <link href="http://teapotcoder.com/post/net-default-syndrome/"/>
+    <id>http://teapotcoder.com/post/net-default-syndrome/</id>
+    <published>2014-03-12T05:00:00.000Z</published>
+    <updated>2015-11-01T21:04:58.510Z</updated>
+    <content type="html"><![CDATA[<p>Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of effort to leave something you have been working with in excess of 10 years for something you have only been looking at for about a year. I know he will do well in whatever environment he choses; because it’s about skill and determination; not about what product or platform you work with. But this isn’t about him and I’m sure he is disappointed about that.<br><a id="more"></a><br>Demis Bellot (@DemisBellot) made a long comment about Rob Sullivan leaving SQL Server and one that I feel bears repeating (but not by me) and must be seriously pointed out. So I’ll just wait here a minute while you go and read <a href="http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks/#comment-826228431" target="_blank" rel="external">his comment</a>. Go ahead I can wait just spinning bits here. But this is not about Demis either.</p>
+<p>Done? If your are a .NET developer how did that hit you? It should have because I’m sure everyone is or has done just what he said; gone with the ‘Microsoft prescribed default framework’.</p>
+<p>Before I go further with this post understand that I do enjoy working in .NET and I have been in .NET (C#/VB) for 10+ years myself desktop and web (mobile soon). I’ve worked in a small/medium business using .NET and PL/B (I know you never heard of PL/B no surprise there). I now work for a medium/large enterprise with .NET. I have nothing against other languages/platforms such as Ruby or Python and would like to really dig into them, but this isn’t about me.</p>
+<p>This is about us; it is about .NET. It is about our work, play, and culture as a community of developers. This is <em>NOT</em> about Microsoft. I repeat this is <em>NOT</em> about Microsoft. They just may end up on the wrong side of the table.</p>
+<p>We the developer community of .NET must pause and look at what we accept as tools to do our work and play. We must hold each other and those that provide framework tooling to a standard of use that currently does not exist on a wide enough scale to properly advance our platform.</p>
+<p>The default framework tooling provided by Microsoft is great to get initially started; to learn a language; to get involved in a community and culture; to get an idea of what a solution should look like. But as time goes on we must grow into different tooling. Advancing our skills our applications and our solutions. To handle the increased features and decreased time frames.</p>
+<p>It is the responsibility of the developer community to put the various .NET framework toolings in their appropriate place. To not allow the default framework to rule over most enterprises and small businesses long term. Should it exist absolutley, but should it be as widespread as it is now? No! We must thank Microsoft for this default framework that has allowed so many to get started so quickly and easily (yes this may be debated). But we must also assume our own responsibility of moving to other framework tooling once we have grown out of the initial solution.</p>
+<p>We must seriously consider the frameworks that have been born out of frustration with the status quo. <a href="http://mvc.fubu-project.org" target="_blank" rel="external">FubuMVC</a>, <a href="http://www.servicestack.net" target="_blank" rel="external">ServiceStack</a>, <a href="http://nancyfx.org" target="_blank" rel="external">NancyFx</a>, <a href="https://github.com/SamSaffron/dapper-dot-net" target="_blank" rel="external">Dapper</a>, <a href="https://github.com/markrendle/Simple.Data" target="_blank" rel="external">Simple.Data</a>, <a href="http://www.toptensoftware.com/petapoco/" target="_blank" rel="external">PetaPoco</a> are only a few examples.</p>
+<p>It is up to us; the community of .NET developers to discuss with our colleagues about a serious change in framework toolings. Not to another platform, but just to another framework. Fear need not be involved as your current knowledge would work well in the new frameworks. Excitment, challenges, easier testing, faster delivery, and easier maintenance await us in these other frameworks. Why? Because someone else was in your place and became frustrated; thinking ‘Why is this difficult?’ and did something about it.</p>
+<p>Platforms such as Ruby and Python don’t have the <a href="http://en.wikipedia.org/wiki/List_of_Tron_characters#Master_Control_Program" target="_blank" rel="external">Master Control Program</a> to provide a default framework. It had to come about by the community. And the community is tenacious about doing it well.</p>
+<p>It will be difficult, and the timing may have to be right, but we must do this. We must discuss and be willing to try and to learn to communicate and to grow and to advance. Lest we continue down the path of the .NET default syndrome.</p>
+<p>–Sometimes I surprise myself with what comes out of this grey matter. Sometimes I wonder if I have any at all.</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Yesterday Rob Sullivan (@DataChomp); the local data magistrate in town announced he was leaving SQL Server for Postgres and Ruby. I applaud him for this move as it does take a non trivial amount of effort to leave something you have been working with in excess of 10 years for something you have only been looking at for about a year. I know he will do well in whatever environment he choses; because it’s about skill and determination; not about what product or platform you work with. But this isn’t about him and I’m sure he is disappointed about that.<br>]]>
+    
+    </summary>
+    
+  </entry>
+  
+</feed>
