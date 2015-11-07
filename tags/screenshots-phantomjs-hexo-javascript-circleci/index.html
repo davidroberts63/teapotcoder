@@ -3,18 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>LastPass Lessons Learned | Teapotcoder</title>
+  <title>Tag: screenshots phantomjs hexo javascript circleci | Teapotcoder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
-<meta property="og:type" content="article">
-<meta property="og:title" content="LastPass Lessons Learned">
-<meta property="og:url" content="http://teapotcoder.com/post/lastpass-lessons-learned/index.html">
+  <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Teapotcoder">
+<meta property="og:url" content="http://teapotcoder.com/tags/screenshots-phantomjs-hexo-javascript-circleci/index.html">
 <meta property="og:site_name" content="Teapotcoder">
-<meta property="og:description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
-<meta property="og:updated_time" content="2015-11-01T20:27:28.839Z">
+<meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LastPass Lessons Learned">
-<meta name="twitter:description" content="I really like using LastPass. In the wake of the HeartBleed fiasco I knew I should change several of my passwords as should you.">
+<meta name="twitter:title" content="Teapotcoder">
+<meta name="twitter:description">
 <meta name="twitter:creator" content="@davidroberts63">
   
   
@@ -140,76 +139,39 @@ ga('send', 'pageview');
   
 </aside>
         
-        <section id="main"><article id="post-lastpass-lessons-learned" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/post/lastpass-lessons-learned/" class="article-date">
-  <time datetime="2014-04-11T05:00:00.000Z" itemprop="datePublished">2014-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      LastPass Lessons Learned
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2015" class="archive-year">2015</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/post/generate-screenshots-of-website-during-build/" class="archive-article-date">
+  <time datetime="2015-11-07T06:00:00.000Z" itemprop="datePublished">Nov 7</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/post/generate-screenshots-of-website-during-build/">Generate screenshots of hexo websites during build</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I really like using <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>. In the wake of the <a href="http://heartbleed.com/" target="_blank" rel="external">HeartBleed</a> fiasco I knew I should change several of my passwords as should you.<a id="more"></a>Just make sure the site you are changing your password on has fixed their certificate or you will still be open to the same vulnerability. Anyway the reason for this post is because I decided to change my <strong>master</strong> password on <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> last night about 10pm. In the back of my mind I was thinking this was a bad idea and should do it in the morning. But no fear I’m good with my passwords, I have a system.</p>
-<h2 id="It-_Failed-">It. Failed.</h2><p>First thing to clear up. I don’t use passwords. I use pass<strong>phrases</strong>. That is my ‘password’ is a longer string of text more akin to a sentence with stuff thrown in. See the <a href="http://xkcd.com/936/" target="_blank" rel="external">XKCD</a> for an idea. Maximum password lengths of 20 or less really bug me. Also <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> does not have access to your password and cannot reset it to a dummy value. All the encryption happens on your computer and then passes the encrypted data up to their servers. They couldn’t open my data if they or anyone else forced them to. That’s one of the top reasons I picked <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a>.</p>
-<p>So last night I change my pass<strong>phrase</strong> feeling good about protecting my data. This morning I login to <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> and recive the ‘invalid login’ message. No fear it happens to me on occasion with the longer passwords I hit the wrong key. Try again and it should be fine. Nope. Slloowwly try again finger pecking this time, nothing. Now I’m officially sweating and co-workers are asking if I am okay. I start making a list of possible alternatives I may have inadvertently used last night. Casing, spacing, number, punctuation you name it I tried it. I was about to give up hope. But <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> sent me my hint as I had requested it and it had a link to ‘Account Recovery’.</p>
-<p>And there in lay rescue. The last ditch effort that <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> offers is to revert your vault. This is truly a final option and a severe one depending on your situation. It just so happens to be one I was hoping that they would have. The reverting your vault option will restore a backup of your vault to the one just prior to the last master password change. It’s very effective for just my situation, having changed my password but done forgot it. Click revert; wait for the server to rescue my data and voila! Login with my old password and everything is right as rain again.</p>
-<p>Just be sure to have access to your email account that your <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> account is setup to send security emails too. Fortunately I don’t use <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> to login to that particular email address to force me to have that password in mind all the time. For those that are concerned about the revert capability you can turn it off in your account settings.</p>
-<p>Again, I really enjoy the <a href="https://www.lastpass.com" target="_blank" rel="external">LastPass</a> service. But I need to get a backup plan in place for this data just in case I totally lose my memory.</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://teapotcoder.com/post/lastpass-lessons-learned/" data-id="cign6jy3k000dxka0odjgj9ey" class="article-share-link">Share</a>
-      
-        <a href="http://teapotcoder.com/post/lastpass-lessons-learned/#disqus_thread" class="article-comment-link">Comments</a>
-      
-      
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/post/to-build-and-deploy/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          To Build and Deploy
-        
-      </div>
-    </a>
-  
-  
-    <a href="/post/okc-dg-servicestack/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">OKC DG ServiceStack</div>
-    </a>
-  
-</nav>
-
-  
 </article>
-
-
-<section id="comments">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
+  
+  
+    </div></section>
+  
 </section>
       </div>
       <footer id="footer">
@@ -227,13 +189,11 @@ ga('send', 'pageview');
 <script>
   var disqus_shortname = 'davidroberts63';
   
-  var disqus_url = 'http://teapotcoder.com/post/lastpass-lessons-learned/';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

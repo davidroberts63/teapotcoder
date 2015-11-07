@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Generate screenshots of hexo websites during build | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="In this post I continue detailing the automation of hexo.io by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generate screenshots of hexo websites during build">
+<meta property="og:url" content="http://teapotcoder.com/post/generate-screenshots-of-website-during-build/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="In this post I continue detailing the automation of hexo.io by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quic">
+<meta property="og:updated_time" content="2015-11-07T05:57:41.939Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Generate screenshots of hexo websites during build">
+<meta name="twitter:description" content="In this post I continue detailing the automation of hexo.io by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quic">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-44834504-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/generate-screenshots-of-website-during-build/">Generate screenshots of hexo websites during build</a>
+          </li>
+        
+          <li>
+            <a href="/post/watch-your-artifacts-web-people/">Watch your artifacts web people</a>
+          </li>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+          <li>
+            <a href="/post/developing-behind-a-proxy/">Developing behind a proxy</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/screenshots-phantomjs-hexo-javascript-circleci/">screenshots phantomjs hexo javascript circleci</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <section id="main"><article id="post-generate-screenshots-of-website-during-build" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/generate-screenshots-of-website-during-build/" class="article-date">
+  <time datetime="2015-11-07T06:00:00.000Z" itemprop="datePublished">2015-11-07</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Generate screenshots of hexo websites during build
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In this post I continue detailing the <a href="/post/automated-install-of-octopus-deploy-server">automation of hexo.io</a> by generating screenshots of the generated site. This is primarily useful when it is run in the continuous integration process so I can quickly check on content submissions.<br><a id="more"></a><br>Something you have to understand is asynchronous work in JavaScript. Callbacks, async, promises, promises, promises. I don’t need a promise, just need it to work. Eventually I chose the <a href="https://www.npmjs.com/search?q=async" target="_blank" rel="external">async</a> npm package because I got it to work and the <code>queue</code> made sense for the moment. The <code>queue</code> function will call the given task function for every item in the queue. Here is an example of using async.queue.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">"async"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Define the 'task' objects which</span></span><br><span class="line"><span class="comment">// will be passed into the queue function</span></span><br><span class="line"><span class="keyword">var</span> tasks = [</span><br><span class="line">     &#123;name: <span class="string">"John"</span>, age:<span class="number">42</span>&#125;,</span><br><span class="line">     &#123;name: <span class="string">"Susan"</span>, age:<span class="number">35</span>&#125;</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create new queue passing in the function that will be</span></span><br><span class="line"><span class="comment">// called for every task object pushed to the queue</span></span><br><span class="line"><span class="keyword">var</span> queue = <span class="keyword">async</span>.queue(<span class="function"><span class="keyword">function</span>(<span class="params">task, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"%s is %d years old."</span>, task.name, task.age);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// If there was an error pass it into the callback</span></span><br><span class="line">  callback();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Define a function to be called when the last item</span></span><br><span class="line"><span class="comment">// in the queue is returned from the worker/task function</span></span><br><span class="line">queue.drain = <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">"Last item returned from worker"</span>);</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">"Err (if any):"</span>);</span><br><span class="line">     <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Filling the queue</span></span><br><span class="line">queue.push(tasks[<span class="number">0</span>]);</span><br><span class="line">queue.push(tasks[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br></pre></td></tr></table></figure>
+<p>Each item will be processed concurrently if possible. There is no guarantee as to the order the task objects will be processed. So make sure to do some setup before hand if needed. You can view the <a href="https://github.com/techlahoma/okcsharp-website/blob/df853f0a9a337c4a8687cce82790960cdaf50530/screenshots.js" target="_blank" rel="external">whole file</a> on GitHub if you want. But I will be going over each part below.</p>
+<p>My goal for this step of my hexo site deployment is to generate screenshots. For that I use <a href="http://phantomjs.org/" target="_blank" rel="external">PhantomJS</a>. With PhantomJS I can simulate the browser at various window sizes and urls snapping screenshots along the way. First up, get the tools for the job. After installing PhantomJS and the <code>async</code> npm package I start a <code>screenshots.js</code> file.</p>
+<p>Get the needed modules for the script.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> system = <span class="built_in">require</span>(<span class="string">"system"</span>);</span><br><span class="line"><span class="keyword">var</span> webpage = <span class="built_in">require</span>(<span class="string">"webpage"</span>);</span><br><span class="line"><span class="keyword">var</span> <span class="keyword">async</span> = <span class="built_in">require</span>(<span class="string">"async"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>The first two modules are provided by PhantomJS. <code>system</code> is how you interact with the machine. It’s what you use instead of <code>process</code> in Node. <code>webpage</code> is well, the webpage you are browsing with PhantomJS. <code>async</code> is what I’m using to handle the asynchronous work here.</p>
+<p>Setup the destination for the screenshots and the sizes of screenshots desired.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> destination = system.env[<span class="string">"CIRCLE_ARTIFACTS"</span>] || <span class="string">"screenshots"</span>;</span><br><span class="line"><span class="keyword">var</span> sizes = [</span><br><span class="line">	&#123; width: <span class="number">1024</span>, height: <span class="number">768</span> &#125;, <span class="comment">// Desktop</span></span><br><span class="line">	&#123; width: <span class="number">750</span>,  height: <span class="number">1334</span>&#125;  <span class="comment">// iPhone 6</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>Here is where we use <code>system</code> to get an environment variable or just use <code>screenshots</code> as a default when run locally. <code>CIRCLE_ARTIFACTS</code> is set by CircleCI during the build process. Once the build is done CircleCI will retain any files stored in that location along with the build. I did a short amount of Googling for the iPhone screenshot size so if it’s inaccurate just let me know.</p>
+<p>Next startup a new queue.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> queue = <span class="keyword">async</span>.queue(handle);</span><br><span class="line">queue.drain = done;</span><br><span class="line">queue.pause();</span><br><span class="line">primeTheQueue();</span><br></pre></td></tr></table></figure>
+<p>Specify the function that will <code>handle</code> the tasks. I also like to know when the process is complete. That’s what the <code>drain</code> member is for. The <code>done</code> method will be called once all is…well, done. The <code>queue.pause</code> may actually not be required, I have not really tested it but I know it does what it says. It pauses the queue from processing until told otherwise. That last call to <code>primeTheQueue</code> does just that. It loads up the queue with the tasks to process.</p>
+<p>Let’s look into how the tasks get into the queue first. Each task object looks like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  name: <span class="string">"Name of page for display purposes"</span>,</span><br><span class="line">  url: <span class="string">"Full url of page to open"</span>,</span><br><span class="line">  page: &#123;PhantomJS webpage object&#125;,</span><br><span class="line">  size: &#123;width: x, height: y&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>name</code> and <code>url</code> should be obvious. The <code>page</code> and <code>size</code> are used to indicate a different step in the screenshot generation. I’ll get to them in just a bit so ignore them for the moment. Here is the <code>primeTheQueue</code> function:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">primeTheQueue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  queue.push(&#123;name: <span class="string">"home"</span>, url: <span class="string">"http://localhost:4000/"</span>&#125;, errorOut);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> home = webpage.create();</span><br><span class="line">  home.open(<span class="string">"http://localhost:4000/"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> firstPost = <span class="keyword">this</span>.evaluate(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">"Getting first article"</span>);</span><br><span class="line">	  <span class="keyword">return</span> <span class="built_in">document</span>.querySelector(<span class="string">"section#main article:first-child a.article-title"</span>);</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	queue.push(&#123;name: <span class="string">"post"</span>, url: firstPost.href&#125;, errorOut);</span><br><span class="line">	queue.resume();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I always want screenshots of the home page so just add that immediately. But I also want a screenshot of the most recent post. To get that I need to open the webpage and find that first link. Create the webpage and open to the home page. The callback will then <code>evaluate</code> the css query selection on that webpage. That query selector path is specific to the layout of our website template. So it will be different for you most likely. It just finds the link to the first post on the page. Add a new task object to the queue with an appropriate name and the url from the webpage. I also add an <code>errorOut</code> function to report problems processing that particular task object.</p>
+<p>Next let’s take a look at the function that is called for each task object.</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handle</span><span class="params">(task, callback)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(task.page === undefined) &#123;</span><br><span class="line">    open(task, <span class="keyword">callback</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    renderPage(task, <span class="keyword">callback</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Short and simple, it just passes onto an appropriate processing method based on if the url has been opened in PhantomJS already. If it has already been opened, as indicated by a defined <code>task.page</code> member on the task object, then render the page out to file. If it has not been opened then open it.</p>
+<p>Speaking of opening a url.</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">open</span><span class="params">(task, callback)</span> </span>&#123;</span><br><span class="line">  console.log(<span class="string">"Opening "</span> + task.name);</span><br><span class="line">  <span class="keyword">var</span> page = webpage.create();</span><br><span class="line">  </span><br><span class="line">  page.open(task.url, <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; sizes.length; i++) &#123;</span><br><span class="line">      queue.push(&#123;name: task.name, size: sizes[i], page: <span class="keyword">this</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">callback</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The <code>open</code> function will be called when a task object is to be processed but it does not have a defined <code>page</code> member. <code>open</code> creates the new PhantomJS <code>webpage</code> object; opens the url specified in the task object; then pushes additional task objects onto the same queue but providing the <code>webpage</code> object used to open that url. Note that it’s not just one task object for each url to open; it’s a task object per url per window size to render. That <code>callback</code> must be called for the queue to know that we have finished with this task object. If there was a problem we could pass the <code>callback</code> function an error object.</p>
+<p>Eventually the queue will have to process a task object that has been opened. Which the <code>handle</code> function will pass off to <code>renderPage</code>.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">renderPage</span>(<span class="params">task, callback</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Rendering "</span> + task.name + <span class="string">" at "</span> + task.size.width + <span class="string">"x"</span> + task.size.height);</span><br><span class="line">  <span class="keyword">var</span> page = task.page;</span><br><span class="line">  page.viewportSize = task.size;</span><br><span class="line">  page.clipRect = &#123; top: <span class="number">0</span>, left: <span class="number">0</span>, width: task.size.width, height: (task.size.height * <span class="number">2</span>) &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">var</span> renderPath = destination + <span class="string">"/"</span> + task.name + <span class="string">"-"</span> + page.clipRect.width + <span class="string">"x"</span> + page.clipRect.height + <span class="string">".png"</span></span><br><span class="line">  page.render(renderPath);</span><br><span class="line">  </span><br><span class="line">  callback();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Here we set the size of the <code>page</code>. That simulates the size of the browser window. The <code>clipRect</code> is set taller so that I grab more content. Think of it like taking a screenshot of a web page while scrolling down the page a bit more. Then just tell the <code>page</code> to render to the path defined. Using the name plus size gives me decently unique name for the file. Each build has it’s own artifacts so I’m not going to bump into a file from a previous build with the same name.</p>
+<p>The last functions are the ones for when the queue has been drained of all task objects, as well as an error function to report any problems when processing a task.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">done</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"Done"</span>);</span><br><span class="line">  phantom.exit();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">errorOut</span>(<span class="params">ex</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(ex !== <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"ERROR on task "</span> + ex);</span><br><span class="line">    phantom.exit();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Please note that it’s important to put the <code>phantom.exit();</code> inside the <code>done</code> function. If you put it outside of that (for example at the end of the js file) then your process will just sit there and do nothing. Why is that? Because if <code>phantom.exit();</code> was outside the functions it would get called before the queue is empty. Which would result in the <code>webpage</code> objects not responding. It’s important to pay attention to what actually happens at what time with asynchronous calls. It can get weird.</p>
+<p>Now just run the script.<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">phantomjs screenshots.js</span><br></pre></td></tr></table></figure></p>
+<p>Then check in the artifacts directory (screenshots locally). You should see some image files. Adding this to your CI process will depend on which tool you use. For CircleCI it’s an edit to your <code>circle.yml</code> file.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test:&#10;  override:&#10;    - npm install -g hexo-cli&#10;    - hexo server:&#10;        background: true&#10;    - sleep 2&#10;    - phantomjs ./screenshots.js</span><br></pre></td></tr></table></figure>
+<p>In CirceCI the <code>test</code> field in your yml file is what they use to run custom tests. What I’m doing here is making sure hexo is available for me to use. I start the <code>hexo server</code> just like you would do locally. This is what PhantomJS will call to get the website.</p>
+<p>Note that I specify that <code>background: true</code> field for the <code>hexo server</code> call. That’s special for CircleCI. Each command  is a separate SSH connection. So if you just <code>hexo server</code> the hexo server would stop running as soon as the SSH connection closed and moved onto the next command. But with that additional field set CircleCI knows to run that command in the background to keep it going even after the SSH connection closes.</p>
+<p>I sleep for a few seconds to give hexo time to generate. Two seconds is plenty of time. Then just run the screenshot script in PhantomJS. Once it’s done the ‘tests’ are complete. CircleCI will gather the artifacts which happen to be screenshots.</p>
+<p>There are a few improvements I want to make to this. Namely the ability to do more than just the home and the post, although I may call YAGNI on it. But I would like to use that excuse in order to get a better handle on the asynchronous patterns. I’d also like to make this a NPM package sometime. To make it easier for others to utilize this functionality.</p>
+<p>In my next post I’ll talk about using node.js to send those screenshots to a GitHub PR as a comment. Take a look at some of the closed pull requets on the <a href="https://github.com/techlahoma/okcsharp-website/pulls?q=is%3Apr+is%3Aclosed" target="_blank" rel="external">okcsharp website repository</a> to see what it looks like.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/generate-screenshots-of-website-during-build/" data-id="cign6jy40000gxka09p5vln44" class="article-share-link">Share</a>
+      
+        <a href="http://teapotcoder.com/post/generate-screenshots-of-website-during-build/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/screenshots-phantomjs-hexo-javascript-circleci/">screenshots phantomjs hexo javascript circleci</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/post/watch-your-artifacts-web-people/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Watch your artifacts web people</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+<script>
+  var disqus_shortname = 'davidroberts63';
+  
+  var disqus_url = 'http://teapotcoder.com/post/generate-screenshots-of-website-during-build/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
