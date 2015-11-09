@@ -67,6 +67,10 @@ pagination_dir: page
 ## Themes: http://hexo.io/themes/
 theme: alex
 
+feed:
+  type: atom
+  path: feed.xml
+
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
