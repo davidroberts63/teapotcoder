@@ -1,6 +1,14 @@
 title: Diagnosing issue with language or tooling of little experience
 tags:
 ---
+I recently added posts to my website. In the past they would show up on us.techlahoma.org but they didn't now. So I reached out to [Rob Sullivan][] to make sure my site was added. He said it was but mentioned that they rely on Google to read the feeds as a single source. That way they don't have to deal with the different formats. Makes sense. Maybe google is a bit behind on something? I decided to figure out what was going on.
+<!--more-->
+This is going to be a long post. It's a discovery post where I take you along as I am trying to figure something out. Nothing to really pickup specifically but just learning how someone else learns. I'm a .NET developer for the most part. The techlahoma site is a Ruby on Rails app I see first step into their github account. My experience level with Ruby and Rails is minimal so this should be fun. You will read me say things that a Ruby/Rails dev will know by heart. But just come along and enjoy the journey.
+
+
+
+
+
 us.techlahoma.org
 
 Ruby app.
