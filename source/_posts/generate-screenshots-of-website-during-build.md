@@ -201,7 +201,7 @@ There are a few improvements I want to make to this. Namely the ability to do mo
 
 In my next post I'll talk about using node.js to send those screenshots to a GitHub PR as a comment. Take a look at some of the closed pull requets on the [okcsharp website repository][] to see what it looks like.
 
-[automation of hexo.io]:/post/automated-install-of-octopus-deploy-server
+[automation of hexo.io]:/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/
 [PhantomJS]:http://phantomjs.org/
 [async]:https://www.npmjs.com/search?q=async
 [An absolute beginner's guide to node.js]:http://blog.modulus.io/absolute-beginners-guide-to-nodejs
