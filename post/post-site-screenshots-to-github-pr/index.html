@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Post site screenshots to Github PR | Teapotcoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I continue the automation of hexo.io by taking the website screenshots generated during the continuous integration proccess and posting them to the Github PR as a comment.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Post site screenshots to Github PR">
+<meta property="og:url" content="http://teapotcoder.com/post/post-site-screenshots-to-github-pr/index.html">
+<meta property="og:site_name" content="Teapotcoder">
+<meta property="og:description" content="I continue the automation of hexo.io by taking the website screenshots generated during the continuous integration proccess and posting them to the Github PR as a comment.">
+<meta property="og:updated_time" content="2015-11-19T05:41:21.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Post site screenshots to Github PR">
+<meta name="twitter:description" content="I continue the automation of hexo.io by taking the website screenshots generated during the continuous integration proccess and posting them to the Github PR as a comment.">
+<meta name="twitter:creator" content="@davidroberts63">
+  
+    <link rel="alternative" href="/feed.xml" title="Teapotcoder" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/images/favicon.png">
+  
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-44834504-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <a href="/" class="logo">Teapotcoder</a>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/page/failures/">Failures</a>
+        
+          <a class="main-nav-link" href="/page/about-me/">About</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/feed.xml" title="RSS Feed"></a>
+        
+        
+          <a id="nav-github-link" class="nav-icon" href="https://github.com/davidroberts63" title="Fork me on GitHub"></a>
+        
+        
+          <a id="nav-twitter-link" class="nav-icon" href="https://twitter.com/davidroberts63" title="Follow me on Twitter"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <nav id="mobile-nav" class="off">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/page/failures/" class="mobile-nav-link">Failures</a>
+  
+    <a href="/page/about-me/" class="mobile-nav-link">About</a>
+  
+  <div id="search-form-wrap-mobile">
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://teapotcoder.com"></form>
+  </div>
+</nav>
+      <div class="outer">
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/post/post-site-screenshots-to-github-pr/">Post site screenshots to Github PR</a>
+          </li>
+        
+          <li>
+            <a href="/post/generate-screenshots-of-website-during-build/">Generate screenshots of hexo websites during build</a>
+          </li>
+        
+          <li>
+            <a href="/post/watch-your-artifacts-web-people/">Watch your artifacts web people</a>
+          </li>
+        
+          <li>
+            <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">Automating static sites with Hexo.io, CircleCI and Github Pages</a>
+          </li>
+        
+          <li>
+            <a href="/post/how-i-got-in-the-world-of-software/">How I got in the world of software</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-github-screenshots-hexo-heroku-express/">node, github, screenshots, hexo, heroku, express</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/screenshots-phantomjs-hexo-javascript-circleci/">screenshots phantomjs hexo javascript circleci</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+        <section id="main"><article id="post-post-site-screenshots-to-github-pr" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/post/post-site-screenshots-to-github-pr/" class="article-date">
+  <time datetime="2015-11-19T05:41:21.000Z" itemprop="datePublished">2015-11-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Post site screenshots to Github PR
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I continue the <a href="/post/automating-static-sites-with-hexo-io-circleci-and-github-pages/">automation of hexo.io</a> by taking the <a href="/post/generate-screenshots-of-website-during-build/">website screenshots</a> generated during the continuous integration proccess and posting them to the Github PR as a comment.<br><a id="more"></a><br>The code you are about to see is not the prettiest JavaScript you will see. But I felt it would be beneficial to see this code evolve over time. I’ll make additional posts talking about how I improve things with this. You can see the full repository on my Github account, <a href="https://github.com/davidroberts63/suede-halibut" target="_blank" rel="external">suede-halibut</a>.</p>
+<h3 id="What_it_does">What it does</h3><p>This node app is just a RESTish/ful/whatever API. When CircleCI is done with the build it will issue a POST to the ‘/pr-build-completion’ url of my deployed heroku app. The request body from CircleCI contains the project name, the build number and the pull request number among many other things. The app will call into CircleCI to get the artifacts for that build number of that project. Then take the image artifacts and post them to the Github PR that triggered the CircleCI build.</p>
+<h3 id="How_it_does_it">How it does it</h3><p>First thing to do. Pick a Node.js web application framework. For this I picked <a href="http://expressjs.com/" target="_blank" rel="external">Express.js</a> because it seemed the simplest to work with for such a simple app as this.</p>
+<h4 id="Getting_all_the_things">Getting all the things</h4><p>My <code>app.js</code> is where my Express.js app lives and is configured. The first part contains all the <code>require</code>ments and initial objects.</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable"><span class="keyword">var</span> request</span> = require(<span class="string">"request"</span>);</span><br><span class="line"><span class="variable"><span class="keyword">var</span> poster</span> = require(<span class="string">"./postissue"</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable"><span class="keyword">var</span> bodyParser</span> = require(<span class="string">"body-parser"</span>);</span><br><span class="line"><span class="variable"><span class="keyword">var</span> express</span> = require(<span class="string">"express"</span>);</span><br><span class="line"><span class="variable"><span class="keyword">var</span> app</span> = express();</span><br><span class="line"><span class="variable"><span class="keyword">var</span> router</span> = express.Router();</span><br></pre></td></tr></table></figure>
+<p><code>request</code> is for making HTTP requests to CircleCI. <code>poster</code> is my own module that does the actual posting of images to the Github PR. <code>bodyParser</code> is Express.js middleware for parsing the request body as JSON. Then you see Express.js, the creation of the app and getting the Express.js router.</p>
+<h4 id="Get_the_configuration">Get the configuration</h4><p>I need some private information to be able to talk to CircleCI and to Github. These environment variables are set in heroku manually.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"Getting settings"</span>);</span><br><span class="line"><span class="keyword">var</span> settings = &#123;&#125;;</span><br><span class="line">settings.circleCiAccount = process.env[<span class="string">"CIRCLE_CI_ACCOUNT"</span>];</span><br><span class="line">settings.circleCiToken = process.env[<span class="string">"CIRCLE_CI_TOKEN"</span>];</span><br><span class="line">settings.githubUsername = process.env[<span class="string">"GITHUB_USERNAME"</span>];</span><br><span class="line">settings.githubApiKey = process.env[<span class="string">"GITHUB_APIKEY"</span>];</span><br><span class="line">settings.orgName = process.env[<span class="string">"GITHUB_ORGNAME"</span>];</span><br></pre></td></tr></table></figure>
+<p>The way it’s setup right now is that it only works for one Github organization/account. At the time of writing that’s just <a href="http://techlahoma.org/" target="_blank" rel="external">techlahoma</a>. That’s the same for the CircleCI part as well because it’s using the name of the Github account as the CI account. It was a little confusing at first but CircleCI just ‘follows’ a repository so goes along with that nomenclature. Just using API keys for CircleCI and Github. You never want to have to use your actual username and password for automation. An API key shows up as you but can’t be used to login as you to the website. So it’s likely not able to change your normal login password.</p>
+<h4 id="Smoke_test_route_and_request_logging-">Smoke test route and request logging.</h4><p>Because I’m new to Express.js and to Node apps in general I wanted to create a simple route in Express.js that would let me know I did at least one thing right. Also, because Express.js is awesome it was trivial to add my own middleware to log requests coming in.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">router.use(<span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"Incoming: %s %s"</span>, req.method, req.url);</span><br><span class="line">	next();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.get(<span class="string">"/"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	res.send(<span class="string">"Ready when you are"</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>If you are not familiar with Express.js most of that should still make some sense. First the log part. <code>router.use</code> inserts middleware into the request pipeline. In this case it is an anonymous function that just sends some of the details of the request to the console. <code>next();</code> is the callback I have to call to allow the pipeline to continue. If I don’t call that function then the pipeline stops there. This happens for every request that comes in that is matched to any route.</p>
+<p>The <code>router.get</code> defines a route that Express.js will respond to. The <code>get</code> part defines the HTTP method. Then you see the URL path which is the root of the site in this case. The function called by Express.js receives the request object and a response object to write a response. All I do here is write out a message that let’s me know I actually hit the site.</p>
+<h4 id="The_POST">The POST</h4><p>The next route is the main one for this app. It’s the only other route defined. It’s a bit long so I’ll step through it in chunks.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.post(<span class="string">"/pr-build-completion"</span>, bodyParser.json(), <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>The route is defined to respond to POST requests made to the <code>/pr-build-completion</code> url. That <code>bodyParser.json()</code> is middleware injection. Actually what’s really going on is the first parameter is the path to respond to; the rest are just taken by Express.js as a series of callbacks to execute for the matching request. Check out the docs on <a href="http://expressjs.com/4x/api.html#router.methods" target="_blank" rel="external">router methods</a>. I really like this part of Express.js. Make’s it very easy to individually break up request handling. But that’s for another post.</p>
+<p>Then I get the relevant data from the request body.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"POST build completion"</span>);</span><br><span class="line"><span class="keyword">var</span> project = req.body.payload.reponame;</span><br><span class="line"><span class="keyword">var</span> build = req.body.payload.build_num;</span><br><span class="line"><span class="keyword">var</span> pull = req.body.payload.pull_request_urls[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>I get the name of the repository that triggered the build, the build number in CircleCI the artifacts of interest are located, and the pull request urls in Github that triggered the build.</p>
+<p>You’ll notice it says <code>pull_request_urls</code> and I just get the first one. I am not sure of a situation where multiple PRs will trigger a single build but in any case there should be one here. Actually there won’t be during builds triggered by merging to <code>master</code> but that’s a defect that I’ll deal with in a later post.</p>
+<p>Next I tease out the PR number.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pull = pull.substring(pull.lastIndexOf(<span class="string">"/"</span>) + <span class="number">1</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"--for build %s of pull %s in the %s project"</span>, build, pull, project);</span><br></pre></td></tr></table></figure>
+<p>I just need the number so I know which PR to add the comment to a bit later.</p>
+<p>Build the CircleCI url to get the build artifacts.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">"https://circleci.com/api/v1/project/"</span> + settings.circleCiAccount + <span class="string">"/"</span> + project + <span class="string">"/"</span> + build + <span class="string">"/artifacts?circle-token="</span> + settings.circleCiToken;</span><br></pre></td></tr></table></figure>
+<p>That’s using some of the configuration settings we got from the environment earlier. <a href="https://circleci.com/docs/api" target="_blank" rel="external">CircleCI REST API</a></p>
+<p>Now that I have the CircleCI url to get the artifacts just send the request.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request(&#123;url: url, headers: &#123; <span class="string">"Accept"</span>: <span class="string">"application/json"</span>&#125; &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, response, body</span>) </span>&#123;</span><br></pre></td></tr></table></figure>
+<p>Specifying the url and saying we want JSON back in the response. Remember this is the HTTP request going out to CircleCI to get the artifacts for the build.</p>
+<p>The first thing to do with the response is parse the JSON body and get just the url for any images in the artifacts.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"Retrieved the artifacts payload"</span>);</span><br><span class="line"><span class="keyword">var</span> payload = <span class="built_in">JSON</span>.parse(body);</span><br><span class="line"><span class="keyword">var</span> screenshots = payload.map(theUrl).filter(forImages);</span><br><span class="line"><span class="built_in">console</span>.log(screenshots);</span><br></pre></td></tr></table></figure>
+<p>This is not Express.js routing thus why I’m parsing the JSON manually. The payload is an array of urls to the artifacts for the build. This is a separate HTTP request going out. Also note I’m going a bit functional here. I had fun with this part as I had just watched a few <a href="https://www.youtube.com/channel/UCO1cgjhGzsSYb1rsB4bFe4Q/videos" target="_blank" rel="external">JavaScript videos</a> by Mattias P Johansson aka <a href="https://twitter.com/mpjme" target="_blank" rel="external">mpjme</a>. Very educational and enjoyable to watch. I highly recommend you watch them soon. Anyway I have two functions defined at the end of <code>app.js</code> to handle that <code>map</code> and <code>filter</code> of the parsed payload from CircleCI.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">theUrl</span>(<span class="params">artifact</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123; url: artifact.url,</span><br><span class="line">    name: artifact.url.substring(artifact.url.lastIndexOf(<span class="string">"/"</span>) + <span class="number">1</span>, artifact.url.lastIndexOf(<span class="string">"-"</span>))</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">forImages</span>(<span class="params">image</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> image.url.substring(image.url.length - <span class="number">3</span>) == <span class="string">"png"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>theUrl</code> just maps the larger artifact object to just it’s url and a name to use in the PR comment. <code>forImages</code> filters out everything except for the screenshots generated during the build. When used in the mapping and filtering of the payload I really like how it reads.</p>
+<p>Back to the handling of the artifact response. After getting just the data we need from the payload we apply a little configuration and use my <code>poster</code> module to send the images to the Github PR.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"Posting to Github PR"</span>);</span><br><span class="line">settings.prNumber = pull;</span><br><span class="line">settings.repoName = project;</span><br><span class="line"></span><br><span class="line">poster.postImagesToIssue(settings, screenshots, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  res.type(<span class="string">"json"</span>);</span><br><span class="line">  res.json(&#123;completum: <span class="string">"yep"</span>&#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>First off, I don’t like that I’m using the <code>settings</code> object to communicate additional details for the <code>poster</code> to use. At least I’m putting that in as a parameter but it still feels a bit off. That’ll be a later post. But I give it those settings so it knows where to put the screenshots supplied in the second argument. Finally a callback that will just return a simple ‘yep’ to the originall caller. CircleCI in this case but I do the ‘yep’ for testing.</p>
+<h4 id="Starting_Express-js">Starting Express.js</h4><p>So we’ve defined the primary route we want. Now we tell Express.js to start listening.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">"/"</span>, router);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> port = process.env[<span class="string">"PORT"</span>] || <span class="number">8080</span>;</span><br><span class="line"><span class="keyword">var</span> ipaddress = <span class="string">"127.0.0.1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"Preparing to listen on %s:%d"</span>, ipaddress, port);</span><br><span class="line"><span class="keyword">var</span> server = app.listen(port, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'%s: Node server started on %s:%d ...'</span>, <span class="built_in">Date</span>(<span class="built_in">Date</span>.now() ), ipaddress, port);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>First we tell Express.js to use ‘/‘ as the base path for all routes defined in the <code>router</code> object. This is useful in the case where you have different sections of your app and you don’t want to have to repeate the same root part of the path. Think of an admin section verses the normal part of the website.</p>
+<p>Then get the port and ip address that will be used to tell Express.js what to listen on. I originally did this on OpenShift so that’s where the IP address comes in but it’s not used on heroku.</p>
+<blockquote>
+<p>See, real code, none of that nice, clean, prepared stuff.</p>
+</blockquote>
+<h4 id="The_poster">The poster</h4><p>The <code>poster</code> is my own module in <code>postissue.js</code>. It’s what takes the urls of the screenshots and puts them in the Github PR comment. When it’ called the first thing we do is prepare the info for connecting to the Github API.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> GithubApi = <span class="built_in">require</span>(<span class="string">"github"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.postImagesToIssue = <span class="function"><span class="keyword">function</span>(<span class="params">settings, cdnUrls, callback</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> github = <span class="keyword">new</span> GithubApi(&#123;</span><br><span class="line">    version: <span class="string">"3.0.0"</span>,</span><br><span class="line">    protocol: <span class="string">"https"</span>,</span><br><span class="line">    host: <span class="string">"api.github.com"</span>,</span><br><span class="line">    timeout: <span class="number">5000</span></span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
+<p>I’m using the <a href="https://www.npmjs.com/package/github" target="_blank" rel="external">Github package</a> to handle all the HTTP requests to Github’s api. </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">github.authenticate(&#123;</span><br><span class="line">  type: <span class="string">"basic"</span>,</span><br><span class="line">  username: settings.githubUsername,</span><br><span class="line">  password: settings.githubApiKey</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Setup the authentication. You can generate those API tokens at the <a href="https://github.com/settings/tokens" target="_blank" rel="external">Personal access tokens</a> page of your profile.</p>
+<p>Next just generate the markdown for the comment to post to the PR.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> comment = <span class="string">""</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> image <span class="keyword">of</span> cdnUrls) &#123;</span><br><span class="line">  comment += image.name + <span class="string">"\r\n"</span> + <span class="string">"!["</span> + image.name + <span class="string">" screenshot]("</span> + image.url + <span class="string">")\r\n"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>I’m simply concatenating the name of the image and the url to it for each image that was generated during the build. The ‘![…](…)’ part is the markdown for pulling in an image.</p>
+<p>Finally I create the comment on the PR.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">"Issue comment:"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(comment);</span><br><span class="line"></span><br><span class="line">github.issues.createComment(&#123;</span><br><span class="line">  user: settings.orgName,</span><br><span class="line">  repo: settings.repoName,</span><br><span class="line">  number: settings.prNumber,</span><br><span class="line">  body: comment</span><br><span class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err, res</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">"=================="</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(res);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">callback(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>First some logging for diagnosis later on when needed. The user in this case will be ‘techlahoma’.  The repo is equivalent to the website. ‘okcsharp-website’ in my case at the moment. But that is gathered from what CircleCI tells us. So if I just setup a different build within the techlahoma organization it should just work. The pull request number triggering the build and then finally the comment with the markdown.</p>
+<p>Once that request has completed it executes the callback function provided. It just sends the results to the console for diagnosis later on when needed.</p>
+<p>The last thing I do here is execute the callback given. Which in this case just allowes the route handling to continue by writing the response.</p>
+<h4 id="In_closing">In closing</h4><p>Overall it works very well. You can push a commit to a PR and stay on the PR page. In a few minutes you will see Github display the new comment without doing anything yourself. This let’s me and other organizers see the resulting changes in a mostly accurate way; without having to pull it down and run hexo.io ourselves.</p>
+<p>In fact the December post for the <a href="http://okcsharp.net/" target="_blank" rel="external">OKCsharp</a> website was done completely in the Github UI. I made a new file and committed it to a new branch in my fork. Sent it as a PR. Waited to see the screenshots looked correct. I noticed an error, made the correction, saw the new screenshots in the PR then merged. All directly from the Github website. Neat.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://teapotcoder.com/post/post-site-screenshots-to-github-pr/" data-id="cih5thodm0009bwa0gybhmyb9" class="article-share-link">Share</a>
+      
+        <a href="http://teapotcoder.com/post/post-site-screenshots-to-github-pr/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node-github-screenshots-hexo-heroku-express/">node, github, screenshots, hexo, heroku, express</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/post/generate-screenshots-of-website-during-build/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Generate screenshots of hexo websites during build</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</section>
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      <a href="/" class="logo">Teapotcoder</a>
+      &copy; 2015 David Roberts<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+<script>
+  var disqus_shortname = 'davidroberts63';
+  
+  var disqus_url = 'http://teapotcoder.com/post/post-site-screenshots-to-github-pr/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="/js/jquery.min.js" type="text/javascript"></script>
+<script src="/js/jquery.scrollLoading.js" type="text/javascript"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
