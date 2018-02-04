@@ -6,6 +6,8 @@ backend:
 media_folder: source/images
 public_folder: /images
 
+publish_mode: editorial_workflow
+
 collections:
   - name: post
     label: Post
