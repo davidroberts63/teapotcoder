@@ -1,3 +1,4 @@
+---
 title: Using self signed CA certificates with git on Windows
 date: 2016-05-01 21:55:37
 tags: windows git tls ssl github
