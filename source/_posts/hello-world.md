@@ -1,5 +1,5 @@
 ---
-title: Hello World
+title: Using NPM in a corporate environment
 date: 2018-02-04T05:34:14.050Z
 ---
-Goodbye Pluto
+Related to the git with self signed CA post.
