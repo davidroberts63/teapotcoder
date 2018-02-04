@@ -10,7 +10,10 @@ collections:
   - name: post
     label: Post
     folder: source/_posts
+    extension: md
     create: true
+    slug: {{slug}}
     fields:
-      - {name: title, label: Title}
-      - {name: body, label: Body, widget: markdown}
+      - {name: "title", label: "Title"}
+      - {name: "date", label: "Date", widget: "datetime"}
+      - {name: "body", label: "Body", widget: "markdown"}
