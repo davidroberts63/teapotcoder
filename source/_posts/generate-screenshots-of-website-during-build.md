@@ -1,3 +1,4 @@
+---
 title: Generate screenshots of hexo websites during build
 date: 2015-11-07 00:00:00
 tags: screenshots phantomjs hexo javascript circleci

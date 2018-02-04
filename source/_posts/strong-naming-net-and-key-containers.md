@@ -1,3 +1,4 @@
+---
 title: Strong Naming .NET and Key Containers
 date: 2014-06-03 00:00:00
 tags:

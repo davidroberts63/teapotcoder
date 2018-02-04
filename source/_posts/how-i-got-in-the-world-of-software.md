@@ -1,3 +1,4 @@
+---
 title: How I got in the world of software
 date: 2015-03-30 00:00:00
 tags:
