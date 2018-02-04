@@ -1,11 +1,7 @@
 ---
 title: Using self signed CA certificates with git on Windows
-date: 2016-05-01 21:55:37
-tags: windows git tls ssl github
-publish: false
+date: 2018-02-03T23:20:37-06:00
 ---
-# DRAFT
-
 Using git internally to access github? Behind a corporate proxy that has an self signed CA cert? Is git complaining about 'SSL certificate problem: unable to get local issuer certificate'? Here ya go.
 
 First, I must thank Philip Kelly for posting an article on this exact situation back in 2014. I also want to say thank you to Alejandro Campos Magencio for the post on getting the certificate chain. I put those two together with the exporting of the certifcate to a file to produce this post.
