@@ -17,7 +17,7 @@ collections:
     fields:
       - {name: "title", label: "Title"}
       - {name: "date", label: "Date", widget: "datetime"}
-      - {name: "tags", label: "Tags", widget: "string"}
+      - {name: "tags", label: "Tags", widget: list}
       - {name: "body", label: "Body", widget: "markdown"}
   - name: pages
     label: Pages
