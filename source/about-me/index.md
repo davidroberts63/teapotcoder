@@ -1,12 +1,13 @@
+---
 title: About Me
-date: 2014-01-27 00:00:00
+date: 2014-01-27T00:00:00.000Z
 permalink: page/about-me/
 ---
-Hello, my name is David Roberts. I consider myself a developer of solutions. Not just code. I try to get involved on the operations side almost as much as on the coding side of projects, as well as the database side. I see no reason why a developer should not be aware of the overall life cycle of software.
+Hello, my name is David Roberts. I consider myself a developer of solutions. Not just code. I try to get involved on the operations side almost as much as on the coding side of projects, as well as the database, networking and server side. I see no reason why a developer should not be aware of the overall life cycle of software.
 
 I have become much more interested in the deployment pipeline of software recently. I am becoming much more involved in build servers, release management/deployment and repeatable machine configuration. Bringing greater efficiency and easier self management of these components of the deployment pipeline intrigue me.
 
-I would describe the type of work that I enjoy in two words: Developer Support. Not technical support, but support of the flow of software solutions from coding and then into production.
+In short I now work in an effort to bring about a common sense of goals between development, operations, security and the rest of IT. What is commonly referred to as DevOps.
 
 I am not the type of person to wait to be told what to do. I find a problem and then work up a solution for that problem. Where ever there maybe excessive manual processing or frustrations with the interface for a process that's where I gravitate to smooth it out.
 
@@ -19,36 +20,36 @@ I prefer working with smaller teams that have an established trust with one anot
 I am always learning. The fast pace of technology today pretty much requires a constant learning practice. I have no fear of other technologies. I have been primarily .NET for most of my career. Other technologies such as Ruby, Python, Node.JS, Puppet, Chef etc are all items that I look forward to working with to expand the tool set at hand.
 
 Technologies I have experience with:
- * C#
- * ASP.NET MVC
- * Nuget
- * NUnit and XUnit
- * Jenkins and CruiseControl.NET
- * Nant
- * Subversion and Git
- * Powershell (does that even count though ;-) )
- * Octopus Deploy
- * Linux (In the past I've used ArchLinux and Ubuntu)
+
+* C#
+* ASP.NET MVC
+* Nuget
+* NUnit and XUnit
+* Jenkins and CruiseControl.NET
+* CakeBuild
+* Dynatrace
+* Docker
+* Git and Subversion
+* Powershell
+* Octopus Deploy
+* Linux (In the past I've used ArchLinux and Ubuntu)
 
 Practices I have experience with:
- * TDD
- * Repeatable configuration (via powershell at the moment learning Puppet)
 
-Technologies that I would like to work with:
- * Puppet and/or Chef
- * TeamCity and/or Jenkins or other build solutions
- * Other build tools (psake, rake, fake, etc…)
- * Python and/or Ruby
+* TDD
+* Repeatable configuration (via powershell at the moment learning Puppet)
 
-I currently live in Oklahoma and will be staying in Oklahoma for quite some time. I am completely open to remote work. I have done so in the past and welcome it again.
+Technologies that I would like to work with more:
 
-You can usually find me on two jabbr rooms most of the day (0800 - 1645 CST (GMT -6/-5))
+* Azure/AWS/GCP
+* Puppet and/or Chef
+* TeamCity and/or Jenkins or other build solutions
+* Other build tools (psake, rake, fake, etc…)
+* Python and/or Ruby
 
-* [Techlahoma](https://jabbr.net/#/rooms/techlahoma)
-* [Octopus Deploy](https://jabbr.net/#/rooms/octopus)
-
+I currently live in Oklahoma and will be staying in Oklahoma for quite some time. Remote work is welcome as I have done so in the past and welcome it again.
 
 * Twitter: [davidroberts63](http://www.twitter.com/davidroberts63)
 * Github: [davidroberts63](http://www.github.com/davidroberts63)
 * Bitbucket: [davidroberts63](http://www.bitbucket.com/davidroberts63)
-* Email: [david@teapotcoder.com](mailto:david@teapotcoder.com)
+* Email: <mailto:david@teapotcoder.com>

@@ -1,0 +1,32 @@
+backend:
+  name: git-gateway
+  branch: cmstest
+
+media_folder: source/images
+public_folder: /images
+
+publish_mode: editorial_workflow
+display_url: https://youthful-fermi-944b79.netlify.com/
+
+collections:
+  - name: post
+    label: Post
+    folder: source/_posts
+    extension: md
+    create: true
+    fields:
+      - {name: "title", label: "Title"}
+      - {name: "date", label: "Date", widget: "datetime"}
+      - {name: "tags", label: "Tags", widget: list}
+      - {name: "body", label: "Body", widget: "markdown"}
+  - name: pages
+    label: Pages
+    files:
+      - name: aboutme
+        label: "About Me"
+        file: source/about-me/index.md
+        fields:
+          - {name: title, label: Title, widget: string}
+          - {name: date, label: Date, widget: datetime}
+          - {name: permalink, label: Permalink, widget: string}
+          - {name: body, label: Body, widget: markdown}

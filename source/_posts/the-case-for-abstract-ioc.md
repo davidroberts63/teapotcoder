@@ -1,3 +1,4 @@
+---
 title: The case for abstract IoC
 date: 2014-12-15 00:00:00
 tags:

@@ -1,3 +1,4 @@
+---
 title: 'Automating static sites with Hexo.io, CircleCI and Github Pages'
 date: 2015-10-31 16:12:05
 tags:

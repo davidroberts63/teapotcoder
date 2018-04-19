@@ -1,3 +1,4 @@
+---
 title: Vagrant for development environments
 date: 2014-06-08 00:00:00
 tags:

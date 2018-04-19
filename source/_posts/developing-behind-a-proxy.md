@@ -1,3 +1,4 @@
+---
 title: Developing behind a proxy
 date: 2015-03-03 00:00:00
 tags:

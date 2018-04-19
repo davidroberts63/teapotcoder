@@ -1,3 +1,4 @@
+---
 title: Automated Install of Octopus Deploy Server
 date: 2014-05-13 00:00:00
 tags:

@@ -1,3 +1,4 @@
+---
 title: .NET Default Syndrome
 date: 2014-03-12 00:00:00
 tags:
