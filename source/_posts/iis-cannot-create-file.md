@@ -1,14 +1,16 @@
 ---
 title: IIS Cannot create file
 date: 2016-08-18T04:45:13.238Z
-tags: iis web.config powershell
+tags:
+ - iis
+ - web.config
+ - powershell
 ---
 I just helped a co-worker deploy a ASP.NET MVC app to a new server. But the IIS Powershell cmdlet kept failing saying:
 
 `Cannot create a file when that file already exists.`
 
 The eventual source of the problem didn`t fall in line with the error message, big surprise I know.
-
 <!--more-->
 
 ## TL;DR
