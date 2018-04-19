@@ -19,11 +19,14 @@ collections:
       - {name: "date", label: "Date", widget: "datetime"}
       - {name: "tags", label: "Tags", widget: "string"}
       - {name: "body", label: "Body", widget: "markdown"}
-  - name: aboutme
-    label: "About Me"
-    file: source/about-me/index.md
-    fields:
-      - {name: title, label: Title, widget: string}
-      - {name: date, label: Date, widget: datetime}
-      - {name: permalink, label: Permalink, widget: string}
-      - {name: body, label: Body, widget: markdown}
+  - name: pages
+    label: Pages
+    files:
+      - name: aboutme
+        label: "About Me"
+        file: source/about-me/index.md
+        fields:
+          - {name: title, label: Title, widget: string}
+          - {name: date, label: Date, widget: datetime}
+          - {name: permalink, label: Permalink, widget: string}
+          - {name: body, label: Body, widget: markdown}
