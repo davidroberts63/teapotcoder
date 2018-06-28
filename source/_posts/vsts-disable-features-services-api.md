@@ -1,0 +1,16 @@
+---
+title: 'VSTS: Disable features/services API'
+date: '2018-06-28T16:01:51-05:00'
+tags:
+  - vsts api
+---
+TL;DR
+
+If you want to disable some services/features in VSTS across all your projects there is a REST API that you can use. It's in preview, and you'll have to script the calls but here you go:
+
+```
+PATCH https://{account}.visualstudio.com/_apis/FeatureManagement/FeatureStates/host/project/{project-id}/{feature-id}
+content-type: application/json
+
+{"featureId":"ms.vss-test-web.test","scope":{"settingScope":"project","userScoped":false},"state":0}
+```
