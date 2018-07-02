@@ -6,7 +6,7 @@ tags:
 ---
 ### Python
 
-This tells you where Python is looking for certs
+This tells you where Python is looking for certs [get_default_verify_paths](https://docs.python.org/3/library/ssl.html?highlight=ssl_cert_file#ssl.get_default_verify_paths).  
 ```
 python.exe -c "import ssl; print(ssl.get_default_verify_paths())"
 ```
