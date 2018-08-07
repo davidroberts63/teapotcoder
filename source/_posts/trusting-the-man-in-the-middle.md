@@ -6,13 +6,19 @@ tags:
 ---
 ### Python
 
-This tells you where Python is looking for certs [get_default_verify_paths](https://docs.python.org/3/library/ssl.html?highlight=ssl_cert_file#ssl.get_default_verify_paths).  
-```
-python.exe -c "import ssl; print(ssl.get_default_verify_paths())"
-```
+Specifically, PIP will need to be told about the CA bundle you want to use. There are many ways:
 
-If the default hasn't been touched you'll see you can use an environment variable named `SSL_CERT_FILE`.  
+- Via the command line argument
+  ```
+   pip --cert path/to/cert install somepackagename
+  ```
+- Via pip's configuration
+  ```
+   pip config --global set global.cert path/to/cert
+  ```
+- Via an environment variable named `PIP_CERT`
 
+Python itself, via requests your application makes, depends on the module you are using. A common one is the `requests` module. Set the `REQUESTS_CA_BUNDLE` to the path of your ca.pem file and you are good to go. Remember to reload the environment/profile when you do that though.
+   
 > Using Azure's Python CLI?
 > C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe
-
