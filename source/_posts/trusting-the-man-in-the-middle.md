@@ -22,3 +22,9 @@ Python itself, via requests your application makes, depends on the module you ar
    
 > Using Azure's Python CLI?
 > C:\Program Files (x86)\Microsoft SDKs\Azure\CLI2\python.exe
+
+### Node (npm is later)
+
+Set the [NODE_EXTRA_CA_CERTS](https://nodejs.org/api/cli.html#cli_node_extra_ca_certs_file) environment variable to the path of your cert file. Reload the environment and you should be good to go.
+
+Node comes prepackaged with a set of CA certs to trust, like the name above implies, it extends that list of CA certs to include the ones you specify.
